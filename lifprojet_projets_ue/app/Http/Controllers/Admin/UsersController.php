@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class UsersController extends Controller
 {
 
-    //Visibilité
+    //Visibilité page lorsque authentifié
     public function __construct() {
         $this->middleware('auth');
     }
@@ -22,6 +22,7 @@ class UsersController extends Controller
      */
     public function index()
     {
+        //Affiche tous les users
         $users = User::all();
 
         return view('admin.users.index')->with('users',$users);
