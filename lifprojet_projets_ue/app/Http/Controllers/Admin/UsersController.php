@@ -103,6 +103,10 @@ class UsersController extends Controller
         //On utilise sync() au lieu de attach() car on passe en paramètre un tableau de rôles
         $user->roles()->sync($request->roles);
 
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->save();
+
         return redirect()->route('admin.users.index');
     }
 
