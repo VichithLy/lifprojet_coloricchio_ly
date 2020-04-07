@@ -21,10 +21,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 // ===== Admin - UsersController =====
 
-//Route::resource('/admin/users', 'Admin\UsersController', ['except' => ['show', 'create', 'store']]); //Enlever create si création de compte par l'admin
+Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:manage-users')->group(function() {
+    //middleware permet de nous assurer que seulement certains rôles ont accés aux controllers
+    //cf auth provider
 
-    //Amélioration
-Route::namespace('Admin')->prefix('admin')->name('admin.')->group(function() {
     Route::resource('/users', 'UsersController', ['except' => ['show', 'create', 'store']]); 
 
 });

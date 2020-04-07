@@ -44,4 +44,24 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Role');
 
     }
+
+    //Contrôle sur les rôles pour accès utilisateur
+    public function hasAnyRoles($roles) {
+
+        //On regarde si les rôles de la table roles matchent avec les rôles passés en paramètre (par rapport à la colonne name)
+        if($this->roles()->whereIn('name', $roles)->first()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function hasRole($role) {
+
+        if($this->roles()->where('name', $role)->first()) {
+            return true;
+        }
+
+        return false;
+    }
 }

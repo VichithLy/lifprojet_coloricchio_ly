@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Gate;
 use App\User;
 use App\Role;
 use Illuminate\Http\Request;
@@ -77,6 +78,11 @@ class UsersController extends Controller
      */
     public function edit(User $user)
     {
+        //Vérification autorisation accès en tant qu'admin
+        if(Gate::denies('edit-users')){
+            return redirect(route('admin.users.index'));
+        }
+
         $roles = Role::all();
 
         return view('admin.users.edit')->with([
@@ -108,6 +114,11 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
+        //Si admin
+        if(Gate::denies('delete-users')){
+            return redirect(route('admin.users.index'));
+        }
+
         //Suppression du/des rôles
         $user->roles()->detach();
         $user->delete();
