@@ -11,6 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        //Obselète avec clé étrangère
         $this->call(UsersTableSeeder::class);
         $this->call(RolesTableSeeder::class);
     }

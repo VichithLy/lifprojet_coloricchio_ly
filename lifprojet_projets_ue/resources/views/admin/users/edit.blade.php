@@ -9,6 +9,8 @@
 
                 <div class="card-body">
                     
+                    <a href="{{ url()->previous() }}">Back</a>
+
                     <form action="{{ route('admin.users.update', $user) }}" method="POST">
 
                         <!-- ====== Champs email ====== -->
@@ -64,7 +66,7 @@
                         <button type="submit" class="btn btn-primary">
                             Update
                         </button>
-                        
+                                        
                     </form>
                     
                 </div>

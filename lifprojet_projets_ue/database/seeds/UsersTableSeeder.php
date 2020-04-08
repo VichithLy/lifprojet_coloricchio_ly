@@ -14,7 +14,6 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-
         User::truncate();
         DB::table('role_user')->truncate();
 
@@ -40,9 +39,10 @@ class UsersTableSeeder extends Seeder
             'password' => Hash::make('password')
         ]);
 
+        
         $admin->roles()->attach($adminRole);
         $author->roles()->attach($authorRole);
         $user->roles()->attach($userRole);
-
+            
     }
 }
