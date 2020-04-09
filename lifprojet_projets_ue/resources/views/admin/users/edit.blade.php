@@ -9,7 +9,7 @@
 
                 <div class="card-body">
                     
-                    <a href="{{ url()->previous() }}">Back</a>
+                    <a href="{{ route('admin.users.index') }}">Back</a>
 
                     <form action="{{ route('admin.users.update', $user) }}" method="POST">
 
