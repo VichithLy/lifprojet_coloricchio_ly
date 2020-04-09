@@ -28,7 +28,7 @@ class AuthServiceProvider extends ServiceProvider
         //Création d'un gate pour nos accès utilisateur
             //Admin
         Gate::define('manage-users', function($user){
-            return $user->hasAnyRoles(['admin', 'author']);
+            return $user->hasAnyRoles(['admin']);
         });
                 //Edit
         Gate::define('edit-users', function($user){

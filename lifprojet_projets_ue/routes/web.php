@@ -27,4 +27,5 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:mana
 
     Route::resource('/users', 'UsersController', ['except' => ['show', 'create', 'store']]); 
 
+
 });

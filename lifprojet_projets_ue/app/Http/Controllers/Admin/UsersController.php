@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Gate;
 use App\User;
 use App\Role;
+use App\Ue;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
@@ -84,10 +85,12 @@ class UsersController extends Controller
         }
 
         $roles = Role::all();
+        $ues = Ue::all();
 
         return view('admin.users.edit')->with([
             'user' => $user,
-            'roles' => $roles   
+            'roles' => $roles,
+            'ues' => $ues
         ]);
     }
 
@@ -102,6 +105,7 @@ class UsersController extends Controller
     {
         //On utilise sync() au lieu de attach() car on passe en paramètre un tableau de rôles
         $user->roles()->sync($request->roles);
+        $user->ues()->sync($request->ues);
 
         $user->name = $request->name;
         $user->email = $request->email;

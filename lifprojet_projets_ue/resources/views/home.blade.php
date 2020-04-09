@@ -42,9 +42,9 @@
                             <div class="mr-sm-5">
                                 <select class="form-control form-control-sm">
                                     <option>Aucune</option>
-                                    <option>2018</option>
-                                    <option>2019</option>
                                     <option>2020</option>
+                                    <option>2019</option>
+                                    <option>2018</option>                  
                                 </select>
                             </div>
 
@@ -62,7 +62,7 @@
 
                     <nav class="navbar navbar-light mb-3">
                         <form class="form-inline mb-2">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Search a projet" aria-label="Search">
+                            <input class="form-control mr-sm-2" type="search" placeholder="Search a project" aria-label="Search">
                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                         </form>
 

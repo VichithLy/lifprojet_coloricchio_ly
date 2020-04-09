@@ -64,4 +64,32 @@ class User extends Authenticatable
 
         return false;
     }
+
+    //Implémentation des ue users
+    public function ues() {
+
+        //Un User possèdent plusieurs roles
+        return $this->belongsToMany('App\Ue');
+
+    }
+
+    //Contrôle sur les rôles pour accès utilisateur
+    public function hasAnyUes($ues) {
+
+        //On regarde si les rôles de la table roles matchent avec les rôles passés en paramètre (par rapport à la colonne name)
+        if($this->ues()->whereIn('name', $ues)->first()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function hasUe($ue) {
+
+        if($this->ues()->where('name', $ue)->first()) {
+            return true;
+        }
+
+        return false;
+    }
 }

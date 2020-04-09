@@ -14,5 +14,6 @@ class DatabaseSeeder extends Seeder
         //Obselète avec clé étrangère
         $this->call(UsersTableSeeder::class);
         $this->call(RolesTableSeeder::class);
+        $this->call(UesTableSeeder::class);
     }
 }

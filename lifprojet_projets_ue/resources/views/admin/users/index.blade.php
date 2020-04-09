@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">Users</div>
 
@@ -15,9 +15,10 @@
                         <tr>
                             <th scope="col" >#</th>
                             <th scope="col">Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Created at</th>
+                            <th scope="col">Email</th>       
+                            <th scope="col">UE</th>
                             <th scope="col">Roles</th>
+                            <th scope="col">Created at</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -27,32 +28,29 @@
                             <tr>
                                 <th scope="row">{{ $user->id }}</th>
                                 <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>{{ $user->created_at }}</td>
+                                <td>{{ $user->email }}</td>                                
+                                <td>{{ implode(', ', $user->ues()->pluck('name')->toArray()) }}</td>
                                 <td>{{ implode(', ', $user->roles()->pluck('name')->toArray()) }}</td>
-                                
-                                <td>
-                                    
-                                    @can('edit-users')
+                                <td>{{ $user->created_at }}</td>
+
+                                <td class="">
+                                    @can('edit-users')   
                                         <a href="{{ route('admin.users.edit', $user->id) }}"> 
-                                            <button type="button" class="btn btn-primary float-left">Edit</button>
+                                            <button type="button" class="btn btn-primary mb-2">Edit</button>
                                         </a>
                                     @endcan
                                     
                                     @can('delete-users')    
-                                        <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="float-left">
+                                        <form action="{{ route('admin.users.destroy', $user) }}" method="POST">
                                             @csrf
 
                                             {{ method_field('DELETE') }}
 
-                                            <button type="submit" class="btn btn-warning">Delete</button>
-                                        
-                                        </form>
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form> 
                                     @endcan
-
                                 </td>
                             </tr>
-
                         @endforeach
                     </tbody>
 

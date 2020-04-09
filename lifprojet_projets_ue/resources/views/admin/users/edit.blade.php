@@ -63,6 +63,20 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="roles" class="col-md-2 col-form-label text-md-right">UE</label>
+
+                            <div class="col-md-6">
+                                @foreach ($ues as $ue)
+                                    <div class="form-check">
+                                        <input type="checkbox" name="ues[]" value="{{ $ue->id }}"
+                                        @if($user->ues->pluck('id')->contains($ue->id)) checked @endif>
+                                        <label>{{ $ue->name }}</label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+
                         <button type="submit" class="btn btn-primary">
                             Update
                         </button>
