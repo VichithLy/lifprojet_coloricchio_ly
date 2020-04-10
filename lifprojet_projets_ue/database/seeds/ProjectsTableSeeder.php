@@ -14,7 +14,7 @@ class ProjectsTableSeeder extends Seeder
     public function run()
     {
         Project::truncate();
-        DB::table('ue_project')->truncate();
+        DB::table('project_ue')->truncate();
 
         $projectUe1 = Ue::where('name', 'LIFAP1')->first();
         $projectUe2 = Ue::where('name', 'LIFASR1')->first();
@@ -42,7 +42,7 @@ class ProjectsTableSeeder extends Seeder
             'path' => 'Chemin dossier Projet 2'
         ]);
 
-        $project2 = Project::create([
+        $project3 = Project::create([
             'title' => 'Projet 3',
             'year' => 2020,
             'description' => 'Caritas autem amicitiae ipsa adducta adducta ex ipsa quod hoc maxime iungeretur sit societate generis adducta natura omnis et ex generis sit et contracta ipsa ut conciliavit ex vis in.',
@@ -55,7 +55,7 @@ class ProjectsTableSeeder extends Seeder
 
         $project1->ues()->attach($projectUe1);
         $project2->ues()->attach($projectUe2);
-        $project2->ues()->attach($projectUe3);
+        $project3->ues()->attach($projectUe3);
 
     }
 }
