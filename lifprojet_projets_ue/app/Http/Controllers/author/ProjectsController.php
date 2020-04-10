@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\author;
 
 use App\Http\Controllers\Controller;
+use Gate;
 use App\Project;
+use App\Ue;
 use Illuminate\Http\Request;
 
 class ProjectsController extends Controller
@@ -66,7 +68,18 @@ class ProjectsController extends Controller
      */
     public function edit(Project $project)
     {
-        return 'author.projects.edit';
+        //Vérification autorisation accès en tant qu'admin ou author
+        if(Gate::denies('manage-projects')){
+            return redirect(route('author.projects.index'));
+        }
+
+        $projects = Project::all();
+        $ues = Ue::all();
+
+        return view('author.projects.edit')->with([
+            'project' => $project,
+            'ues' => $ues
+        ]);
     }
 
     /**
@@ -78,7 +91,25 @@ class ProjectsController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+        //dd($request);
+
+        //On utilise sync() au lieu de attach() car on passe en paramètre un tableau de rôles
+        $project->ues()->attach($request->ue);
+
+        $project->title = $request->title;
+        $project->year = $request->year;
+        $project->description = $request->description;
+        $project->mark = $request->mark;
+        $project->git = $request->git;
+
+        if($project->save()) {
+            //Alerte
+            $request->session()->flash('success', $project->title . ' has been updated');
+        } else {
+            $request->session()->flash('error', 'Error on updating the user');
+        }
+
+        return redirect()->route('author.projects.index');
     }
 
     /**
@@ -87,8 +118,18 @@ class ProjectsController extends Controller
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Project $project)
+    public function destroy(Request $request, Project $project)
     {
-        //
+ 
+        if (Gate::denies('manage-projects')) {
+            return redirect(route('home'));
+        } 
+
+        //Suppression de l'ue
+        $project->ues()->detach();
+        $project->delete();
+        $request->session()->flash('success', $project->title . ' has been deleted');
+
+        return redirect()->route('author.projects.index');
     }
 }

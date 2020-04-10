@@ -67,6 +67,7 @@
                                     <th scope="col">UE</th>
                                     <th scope="col">Description</th>
                                     <th scope="col">README</th>
+                                    <th scope="col">Mark</th>
                                     <th scope="col">Zip</th>
                                     <th scope="col">Git</th>
                                     <th scope="col">Path</th>
@@ -84,6 +85,7 @@
                                         <td>{{ implode(', ', $project->ues()->pluck('name')->toArray()) }}</td>
                                         <td>{{ $project->description }}</td>
                                         <td>{{ $project->readme }}</td>
+                                        <td>{{ $project->mark }}/20</td>
                                         <td>{{ $project->zip }}</td>
                                         <td>{{ $project->git }}</td>
                                         <td>{{ $project->path }}</td>
@@ -93,13 +95,15 @@
                                                 <button type="button" class="btn btn-primary mb-2">Edit</button>
                                             </a>
 
-                                            <form action="" method="POST">
-                                                @csrf
+                                            @can('manage-projects')    
+                                                <form action="{{ route('author.projects.destroy', $project) }}" method="POST">
+                                                    @csrf
 
-                                                {{ method_field('DELETE') }}
+                                                    {{ method_field('DELETE') }}
 
-                                                <button type="submit" class="btn btn-danger">Delete</button>
-                                            </form> 
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form> 
+                                            @endcan
                                         </td>                    
                                     </tr>
                             @endforeach

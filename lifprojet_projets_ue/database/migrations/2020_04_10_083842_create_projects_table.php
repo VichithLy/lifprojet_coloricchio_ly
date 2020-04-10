@@ -17,10 +17,11 @@ class CreateProjectsTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->integer('year');
-            $table->longText('description');
-            $table->string('readme');
+            $table->longText('description')->nullable();;
+            $table->string('readme')->nullable();;
+            $table->integer('mark')->nullable();;
             $table->string('zip');
-            $table->string('git');
+            $table->string('git')->nullable();;
             $table->string('path');
             $table->timestamps();
         });

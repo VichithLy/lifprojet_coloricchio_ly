@@ -10,10 +10,12 @@ class Project extends Model
         'title', 'year', 'description', 'git',
     ];*/
 
+    //On garde le cas où un projet peut avoir plusieurs UE
+    
     //Implémentation des ue projects
     public function ues() {
 
-        //Un User possèdent plusieurs roles
+        //Un user possèdent un ou plusieurs ues
         return $this->belongsToMany('App\Ue');
 
     }
