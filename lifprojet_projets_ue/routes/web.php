@@ -26,6 +26,11 @@ Route::namespace('Admin')->prefix('admin')->name('admin.')->middleware('can:mana
     //cf auth provider
 
     Route::resource('/users', 'UsersController', ['except' => ['show', 'create', 'store']]); 
+});
 
+Route::namespace('author')->prefix('author')->name('author.')->middleware('can:manage-projects')->group(function() {
+    //middleware permet de nous assurer que seulement certains rôles ont accés aux controllers
+    //cf auth provider
 
+    Route::resource('/projects', 'ProjectsController', ['except' => ['show', 'create']]); 
 });

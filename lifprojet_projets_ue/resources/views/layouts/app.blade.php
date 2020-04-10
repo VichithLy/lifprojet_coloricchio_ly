@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'LIFPROJET') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -66,6 +66,13 @@
                                             User Management
                                         </a>
                                     @endcan
+
+                                    @can('manage-projects')
+                                        <a class="dropdown-item" href="{{ route('author.projects.index') }}">
+                                            Project Management
+                                        </a>
+                                    @endcan
+
                                                                       
                                     <a class="dropdown-item font-weight-bold" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();

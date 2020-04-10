@@ -73,6 +73,7 @@ class RegisterController extends Controller
 
         $role = Role::select('id')->where('name', 'user')->first();
 
+        //Role de User par défaut
         $user->roles()->attach($role);
 
         return $user;

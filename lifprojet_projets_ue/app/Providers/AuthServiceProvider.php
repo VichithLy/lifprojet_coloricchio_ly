@@ -26,7 +26,8 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         //Création d'un gate pour nos accès utilisateur
-            //Admin
+            //User
+                //Admin
         Gate::define('manage-users', function($user){
             return $user->hasAnyRoles(['admin']);
         });
@@ -39,5 +40,10 @@ class AuthServiceProvider extends ServiceProvider
             return $user->hasRole('admin');
         });
 
+
+            //Project
+        Gate::define('manage-projects', function($user){
+            return $user->hasAnyRoles(['admin', 'author']);
+        });   
     }
 }
