@@ -53,6 +53,39 @@ class ProjectsTableSeeder extends Seeder
             'path' => 'Chemin dossier Projet 3'
         ]);
 
+        $project3 = Project::create([
+            'title' => 'Projet 3',
+            'year' => 2020,
+            'description' => 'Caritas autem amicitiae ipsa adducta adducta ex ipsa quod hoc maxime iungeretur sit societate generis adducta natura omnis et ex generis sit et contracta ipsa ut conciliavit ex vis in.',
+            'readme' => 'Lien readme Projet 3',
+            'mark' => 20,
+            'zip' => 'Lien zip Projet 3',
+            'git' => 'Lien git Projet 3',
+            'path' => 'Chemin dossier Projet 3'
+        ]);
+
+        $project4 = Project::create([
+            'title' => 'Projet 3',
+            'year' => 2020,
+            'description' => 'Caritas autem amicitiae ipsa adducta adducta ex ipsa quod hoc maxime iungeretur sit societate generis adducta natura omnis et ex generis sit et contracta ipsa ut conciliavit ex vis in.',
+            'readme' => 'Lien readme Projet 3',
+            'mark' => 20,
+            'zip' => 'Lien zip Projet 3',
+            'git' => 'Lien git Projet 3',
+            'path' => 'Chemin dossier Projet 3'
+        ]);
+
+        $project5 = Project::create([
+            'title' => 'Projet 3',
+            'year' => 2020,
+            'description' => 'Caritas autem amicitiae ipsa adducta adducta ex ipsa quod hoc maxime iungeretur sit societate generis adducta natura omnis et ex generis sit et contracta ipsa ut conciliavit ex vis in.',
+            'readme' => 'Lien readme Projet 3',
+            'mark' => 20,
+            'zip' => 'Lien zip Projet 3',
+            'git' => 'Lien git Projet 3',
+            'path' => 'Chemin dossier Projet 3'
+        ]);
+
         $project1->ues()->attach($projectUe1);
         $project2->ues()->attach($projectUe2);
         $project3->ues()->attach($projectUe3);

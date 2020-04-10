@@ -16,7 +16,7 @@ class Ue extends Model
     public function projects() {
         
         //Un ue est possédé par plusieurs projets
-        return $this->belongsToMany('App\Project');
+        return $this->hasMany('App\Project');
 
     }
 }

@@ -69,7 +69,10 @@
                             <label for="description" class="col-md-3 col-form-label text-md-right"><strong>Description</strong></label>
 
                             <div class="col-md-6">
-                                <textarea id="description" class="form-control" name="description" autofocus rows="3">{{ $project->description }}</textarea>
+                                <textarea id="description" class="form-control" name="description" maxlength="499" autofocus rows="3">{{ $project->description }}</textarea>
+                                @error('description')
+                                    <p class="help is-invalid">{{ $message }}</p>
+                                @enderror
                             </div>
                         </div>
 
@@ -82,7 +85,7 @@
 
                                 @error('mark')
                                     <p class="help is-invalid">{{ $message }}</p>
-                                 @enderror
+                                @enderror
                             </div>
                         </div>
 

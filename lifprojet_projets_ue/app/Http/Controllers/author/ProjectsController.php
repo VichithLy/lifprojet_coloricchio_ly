@@ -93,8 +93,8 @@ class ProjectsController extends Controller
     {
         //dd($request);
 
-        //On utilise sync() au lieu de attach() car on passe en paramètre un tableau de rôles
-        $project->ues()->attach($request->ue);
+        //On utilise sync() au lieu de attach() pour remplacer l'ancien ue
+        $project->ues()->sync($request->ue);
 
         $project->title = $request->title;
         $project->year = $request->year;

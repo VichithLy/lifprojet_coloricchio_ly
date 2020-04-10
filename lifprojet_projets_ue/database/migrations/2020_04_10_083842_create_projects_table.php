@@ -17,7 +17,7 @@ class CreateProjectsTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->integer('year');
-            $table->longText('description')->nullable();;
+            $table->string('description', 500)->nullable();;
             $table->string('readme')->nullable();;
             $table->integer('mark')->nullable();;
             $table->string('zip');
