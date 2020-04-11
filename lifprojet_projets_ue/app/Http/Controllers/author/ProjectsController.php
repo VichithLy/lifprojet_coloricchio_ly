@@ -33,8 +33,6 @@ class ProjectsController extends Controller
         $ue_names = $current_user->ues()->pluck('name')->toArray();
         $ue_ids = $current_user->ues()->pluck('ue_id')->toArray();
 
-        $roger = array_combine($ue_ids, $ue_names);
-
         //dd($ue_names);
         //dd($ue_ids);
 
