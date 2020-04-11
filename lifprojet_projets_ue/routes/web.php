@@ -17,7 +17,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
+
+//Montrer tous les projets sur la page d'accueil
+Route::get('/home', 'author\ProjectsController@showAll')->name('projects.showAll');
 
 // ===== Admin - UsersController =====
 
@@ -34,3 +37,4 @@ Route::namespace('author')->prefix('author')->name('author.')->middleware('can:m
 
     Route::resource('/projects', 'ProjectsController', ['except' => ['show', 'create']]); 
 });
+

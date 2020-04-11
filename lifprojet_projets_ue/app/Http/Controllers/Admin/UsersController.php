@@ -13,9 +13,7 @@ class UsersController extends Controller
 {
 
     //Visibilité page lorsque authentifié
-    public function __construct() {
-        $this->middleware('auth');
-    }
+   
 
     /**
      * Display a listing of the resource.
@@ -68,7 +66,18 @@ class UsersController extends Controller
     public function show(User $user)
     {
         //
+    }*/
+
+
+    public function getCurrentUser()
+    {
+        //Affiche tous les users
+        $users = User::all();
+
+        dd($users);
     }
+
+
 
     /**
      * Show the form for editing the specified resource.

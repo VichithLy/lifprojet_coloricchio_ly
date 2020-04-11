@@ -60,6 +60,12 @@ class ProjectsController extends Controller
         //
     }
 
+    public function showAll(Project $project)
+    {
+        $projects = Project::all();
+        return view('home')->with('projects', $projects);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
