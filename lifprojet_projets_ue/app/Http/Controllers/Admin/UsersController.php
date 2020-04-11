@@ -113,7 +113,7 @@ class UsersController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(UsersRequest $request, User $user)
     {
         //On utilise sync() au lieu de attach() car on passe en paramètre un tableau de rôles
         $user->roles()->sync($request->roles);
