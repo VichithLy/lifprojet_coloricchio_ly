@@ -116,7 +116,7 @@ class ProjectsController extends Controller
      * @param  \App\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Project $project)
+    public function update(ProjectsRequest $request, Project $project)
     {
         //dd($request);
 
