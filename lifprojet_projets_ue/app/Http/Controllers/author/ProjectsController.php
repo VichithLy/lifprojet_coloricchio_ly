@@ -8,6 +8,7 @@ use Auth;
 use App\Project;
 use App\Ue;
 use Illuminate\Http\Request;
+use App\Http\Requests\ProjectsRequest;
 
 class ProjectsController extends Controller
 {

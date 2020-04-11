@@ -8,6 +8,7 @@ use App\User;
 use App\Role;
 use App\Ue;
 use Illuminate\Http\Request;
+use App\Http\Requests\UsersRequest;
 
 class UsersController extends Controller
 {
