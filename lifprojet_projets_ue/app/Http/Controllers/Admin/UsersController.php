@@ -14,7 +14,9 @@ class UsersController extends Controller
 {
 
     //Visibilité page lorsque authentifié
-   
+    public function __construct() {
+        $this->middleware('auth');
+    }
 
     /**
      * Display a listing of the resource.

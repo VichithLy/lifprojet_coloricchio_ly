@@ -115,7 +115,7 @@
                                         </a>
 
                                         @can('manage-projects')    
-                                            <form action="{{ route('author.projects.destroy', $project) }}" method="POST">
+                                            <form action="{{ route('author.projects.destroy', $project->id) }}" method="POST">
                                                 @csrf
 
                                                 {{ method_field('DELETE') }}

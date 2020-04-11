@@ -47,15 +47,18 @@
                         </div>
 
                         <!-- ====== Champ UE ====== -->
-
                         <div class="form-group row">
                             <label for="ue" class="col-md-3 col-form-label text-md-right"><strong>UE</strong></label>
-
+                            
                             <div class="col-md-6">
                                 <div class="select">
                                     <select name="ue" class="form-control">
                                         @foreach($ues as $ue)
-                                            <option value="{{ $ue->id }}">{{ $ue->name }}</option>
+                                            @if ( $ue->id  == $project->ues()->pluck('ue_id')->first() )
+                                                <option value="{{ $ue->id }}" selected>{{ $ue->name }}</option>
+                                            @else
+                                                <option value="{{ $ue->id }}">{{ $ue->name }}</option>
+                                            @endif       
                                         @endforeach
                                     </select>
                                 </div>

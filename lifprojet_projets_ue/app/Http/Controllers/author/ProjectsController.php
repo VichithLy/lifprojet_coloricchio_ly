@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\author;
 
 use App\Http\Controllers\Controller;
+use DB;
 use Gate;
 use Auth;
 use App\Project;
@@ -25,22 +26,34 @@ class ProjectsController extends Controller
      */
     public function index()
     {   
-        //Affiche tous les projets
-        $projects = Project::all();
-
         //On récupère les infos de l'utilisateur connecté
         $current_user = Auth::user();
-        
         $ue_names = $current_user->ues()->pluck('name')->toArray();
         $ue_ids = $current_user->ues()->pluck('ue_id')->toArray();
 
         //dd($ue_names);
         //dd($ue_ids);
 
+        //On récupère les id des projets seulement visibles par l'utilisateur
+        $author_projects = DB::table('projects')
+            ->join('project_ue', 'projects.id', '=', 'project_ue.project_id')
+            ->join('ues', 'project_ue.ue_id', '=', 'ues.id')
+            ->select('projects.*')
+            ->whereIn('ue_id', $ue_ids)
+            ->orderBy('id')
+            ->pluck('id')
+            ->toArray(); //transforme notre collection en simple tableau d'int
+
+        //On récupère les instances de Project suivant les id trouvés pas notre requête
+        $projects = Project::whereIn('id', $author_projects)->get();
+        
+        //dd($projects);
+
         return view('author.projects.index')
         ->with('projects', $projects)
         ->with('ue_names', $ue_names)
-        ->with('ue_ids', $ue_ids);
+        ->with('ue_ids', $ue_ids)
+        ->with('author_projects', $author_projects);
     }
 
     /**
