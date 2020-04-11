@@ -4,6 +4,7 @@ namespace App\Http\Controllers\author;
 
 use App\Http\Controllers\Controller;
 use Gate;
+use Auth;
 use App\Project;
 use App\Ue;
 use Illuminate\Http\Request;
@@ -25,7 +26,22 @@ class ProjectsController extends Controller
     {   
         //Affiche tous les projets
         $projects = Project::all();
-        return view('author.projects.index')->with('projects', $projects);
+
+        //On récupère les infos de l'utilisateur connecté
+        $current_user = Auth::user();
+        
+        $ue_names = $current_user->ues()->pluck('name')->toArray();
+        $ue_ids = $current_user->ues()->pluck('ue_id')->toArray();
+
+        $roger = array_combine($ue_ids, $ue_names);
+
+        //dd($ue_names);
+        //dd($ue_ids);
+
+        return view('author.projects.index')
+        ->with('projects', $projects)
+        ->with('ue_names', $ue_names)
+        ->with('ue_ids', $ue_ids);
     }
 
     /**
@@ -46,7 +62,8 @@ class ProjectsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request);
+        return 'Je viens de créer un projet.';
     }
 
     /**
@@ -63,6 +80,10 @@ class ProjectsController extends Controller
     public function showAll(Project $project)
     {
         $projects = Project::all();
+        
+        
+        //->ues()->pluck('name')->toArray();
+
         return view('home')->with('projects', $projects);
     }
 

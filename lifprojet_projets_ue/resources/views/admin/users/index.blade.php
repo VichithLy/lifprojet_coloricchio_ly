@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Users management</div>
+                <div class="card-header">Users management - Je suis {{ $current_user->name }}</div>
 
                 <div class="card-body">
                     

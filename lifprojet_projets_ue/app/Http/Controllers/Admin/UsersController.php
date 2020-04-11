@@ -25,7 +25,11 @@ class UsersController extends Controller
         //Affiche tous les users
         $users = User::all();
 
-        return view('admin.users.index')->with('users',$users);
+        $current_user = auth()->user();
+
+        return view('admin.users.index')
+        ->with('users', $users)
+        ->with('current_user', $current_user);
     }
 
     /**
