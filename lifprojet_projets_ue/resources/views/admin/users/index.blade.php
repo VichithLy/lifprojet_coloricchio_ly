@@ -110,9 +110,12 @@
 
 </script>
 
+
 @extends('layouts.app')
 
 @section('content')
+
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -121,24 +124,24 @@
 
                 <div class="card-body">
                     
-                    <table class="table">
+                    <table class="avectri">
 
                     <thead>
                         <tr>
-                            <th scope="col" >#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Email</th>       
-                            <th scope="col">UE</th>
-                            <th scope="col">Roles</th>
-                            <th scope="col">Created at</th>
-                            <th scope="col">Action</th>
+                            <th class="selection" data-tri="1" data-type="num" scope="col" >#</th>
+                            <th class="selection" data-tri="1" data-type="num" scope="col">Name</th>
+                            <th class="selection" data-tri="1" data-type="num" scope="col">Email</th>       
+                            <th class="selection" data-tri="1" data-type="num" scope="col">UE</th>
+                            <th class="selection" data-tri="1" data-type="num" scope="col">Roles</th>
+                            <th class="selection" data-tri="1" data-type="num" scope="col">Created at</th>
+                            <th class="selection" data-tri="1" data-type="num" scope="col">Action</th>
                         </tr>
                     </thead>
                     
                     <tbody>
                         @foreach ($users as $user)
                             <tr>
-                                <th scope="row">{{ $user->id }}</th>
+                                <th class="selection" data-tri="1" data-type="num" scope="row">{{ $user->id }}</th>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>                                
                                 <td>{{ implode(', ', $user->ues()->pluck('name')->toArray()) }}</td>
