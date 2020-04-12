@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers\author;
 
-use App\Http\Controllers\Controller;
 use DB;
 use Gate;
 use Auth;
+use File;
+use ZipArchive;
 use App\Project;
 use App\Ue;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Requests\ProjectsRequest;
 
 class ProjectsController extends Controller
@@ -73,9 +77,101 @@ class ProjectsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        dd($request);
-        return 'Je viens de créer un projet.';
+    {   
+        // file validation
+        $validator      =   Validator::make($request->all(),
+            ['file'      =>   'required|mimes:zip,rar|max:2048']);
+
+        // if validation fails
+        if($validator->fails()) {
+            $request->session()->flash('error', 'Mauvais type de fichier');
+        }
+        
+        // if validation success
+        if($file = $request->file('file')) { //Si le fichier existe
+
+            //Infos utiles du formulaire
+                //Titre (nom sans l'extension)
+            $title = pathinfo($request->file->getClientOriginalName(), PATHINFO_FILENAME);
+                //Année
+            $year = $request->year;
+                //UE
+            $ue = $request->ue;
+
+            //Nom fichier avec extension
+            $name = $request->file->getClientOriginalName();
+            //Nom du fichier avec date d'upload
+            $fileName = time().'.'.$request->file->extension(); 
+
+            //Upload du zip dans un dossier
+            
+                //Dossier d'upload
+            $target_path = 'uploads/projects';
+                //Enregistrement vers le dossier
+            if($file->move(public_path($target_path), $name)) {
+                $request->session()->flash('success', 'File uploaded successfully');
+            }
+
+                //Extraction du zip dans un dossier /extracted
+            $zipfile = new ZipArchive;
+            //$zip_target_path = public_path('uploads/projects/extracted/' . $name);
+            $zip_target_path = $target_path . '/extracted/' . $name;
+            
+                //On ne vérifie pas que le fichier à upload n'existe pas déjà !
+            if ($zipfile->open(public_path($target_path . '/' . $name)) === TRUE)
+            {
+                $zipfile->extractTo(public_path($zip_target_path));
+                $zipfile->close();
+
+                $request->session()->flash('success', 'File extracted successfully');
+            } else {
+                
+                $request->session()->flash('error', 'File not extracted');
+
+            }
+
+            // ----------------------- //
+
+            //Liste des fichiers dans le dossier extrait du zip
+            $project_path = $zip_target_path;
+            $files_within_project = File::allfiles(public_path($project_path));
+
+            $txt_files = array();
+
+            /*foreach ($files_within_project as $file) {
+                echo $file . "<br />";
+            }*/
+
+            //foreach (glob('/*.txt') as $file) {
+                //$txt_files[] = $file;
+            //}
+
+            dd($files_within_project);
+            
+            
+
+            //Lien README
+
+            //Lien zip
+
+            //Récupérer toutes les images dans un tableau
+                //Envoyer le tabeau d'image à la vue index
+
+
+            // ----------------------- //
+
+            //Enregistrement dans la base de données 
+                //Titre
+                //Année
+                //UE
+                //Lien README
+                //Path du dossier zip
+
+        }
+
+        
+        return redirect()->route('author.projects.index');
+        
     }
 
     /**

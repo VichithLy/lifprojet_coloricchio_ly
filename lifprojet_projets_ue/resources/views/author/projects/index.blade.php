@@ -24,10 +24,20 @@
                             Ajouter des projets
                         </div>
 
+                        <div class="m-3 pt-2 pr-2 pl-2 border rounded">
+                            Pré-requis des projet à upload : 
+                            <ul>
+                                <li>Dossier au format .zip ou .rar</li>
+                                <li>Un titre de dossier explicite (nom projet et noms étudiant)</li>
+                                <li>Des images au format .png ou .jpg ou .jpeg</li>
+                                <li>Un fichier README au format .txt ou .md</li>
+                            </ul>
+                        </div>
+
                         <!-- Formulaire projet -->
 
                         <div class="mt-4 mr-3 ml-3">
-                            <form action="{{ route('author.projects.store') }}" method="POST">
+                            <form action="{{ route('author.projects.store') }}" method="POST" enctype="multipart/form-data">
 
                                 @csrf
 
@@ -62,8 +72,11 @@
 
                                 </div>
 
-                                <div class="form-group mt-2">
-                                    <input type="file" class="form-control" name="file">
+                                    <!-- ====== Champ upload ====== -->
+                                
+                                <div class="custom-file mt-3 mb-3">
+                                    <input type="file" name="file" class="custom-file-input" id="customFile" required>
+                                    <label class="custom-file-label" for="customFile">Choose file</label>
                                 </div>
 
                                 <div class="form-group">
