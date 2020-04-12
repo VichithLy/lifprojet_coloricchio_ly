@@ -15,14 +15,16 @@ class CreateProjectsTable extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('name');
             $table->string('title');
             $table->integer('year');
             $table->string('description', 500)->nullable();
             $table->string('readme')->nullable();
-            $table->integer('mark')->nullable()->unsigned();
+            $table->float('mark', 4, 2)->nullable()->unsigned();
             $table->string('zip');
             $table->string('git')->nullable();
             $table->string('path');
+            $table->json('images')->nullable();
             $table->timestamps();
         });
     }

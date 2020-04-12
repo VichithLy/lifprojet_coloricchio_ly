@@ -6,9 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
-    /*protected $fillable = [
-        'title', 'year', 'description', 'git',
-    ];*/
+    //Tableau JSON d'images
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'images' => 'array',
+    ];
+
+    protected $fillable = [
+        'title', 'year', 'zip', 'path', 'images', 'name',
+    ];
 
     //On garde le cas où un projet peut avoir plusieurs UE
     

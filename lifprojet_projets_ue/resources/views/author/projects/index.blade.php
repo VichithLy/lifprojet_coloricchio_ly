@@ -121,7 +121,7 @@
             <div class="card">
                 
                 <div class="card-header">Projects management </div>
-
+                
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
@@ -140,7 +140,7 @@
                         <div class="m-3 pt-2 pr-2 pl-2 border rounded">
                             Pré-requis des projet à upload : 
                             <ul>
-                                <li>Dossier au format .zip ou .rar</li>
+                                <li>Dossier au format .zip <strong>UNIQUEMENT</strong></li>
                                 <li>Un titre de dossier explicite (nom projet et noms étudiant)</li>
                                 <li>Des images au format .png ou .jpg ou .jpeg</li>
                                 <li>Un fichier README au format .txt ou .md</li>
@@ -210,7 +210,7 @@
                                 <th scope="col">Title</th>
                                 <th scope="col">Year</th>       
                                 <th scope="col">UE</th>
-                                <th scope="col">Description</th>
+                                <th scope="col">Comment</th>
                                 <th scope="col">README</th>
                                 <th scope="col">Mark</th>
                                 <th scope="col">Zip</th>
@@ -222,7 +222,9 @@
                         </thead>
                         
                         <tbody>
+                            
                             @foreach ($projects as $project)
+                                
                                 <tr>
                                     <th scope="row">{{ $project->id }}</th>
                                     <td>{{ $project->title }}</td>
@@ -231,7 +233,7 @@
                                     <td>{{ $project->description }}</td>
                                     <td>{{ $project->readme }}</td>
                                     <td>{{ $project->mark }}/20</td>
-                                    <td>{{ $project->zip }}</td>
+                                    <td><a href="{{ route('project.download', $project->name) }}">Thing</a></td>
                                     <td>{{ $project->git }}</td>
                                     <td>{{ $project->path }}</td>
                                     <td>{{ $project->created_at }}</td>
@@ -240,6 +242,7 @@
                                             <button type="button" class="btn btn-primary mb-2">Edit</button>
                                         </a>
 
+                                        
                                         @can('manage-projects')    
                                             <form action="{{ route('author.projects.destroy', $project->id) }}" method="POST">
                                                 @csrf

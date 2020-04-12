@@ -70,7 +70,7 @@
                     <div class="row">
                         
                         @foreach ($projects as $project)
-                        
+                            
                             <div class="col-xs-12 col-sm-6 col-md-4">
                                 <div class="card border-dark mb-4">
                                     <!-- Images -->
@@ -105,7 +105,7 @@
                                         </ul>
 
                                         <div class="card-text mt-3">
-                                            <p><u>Description :</u></p> 
+                                            <p><u>Commentaire :</u></p> 
                                             {{ $project->description }}
                                         </div>
                                     </div>
@@ -116,7 +116,7 @@
                                     </ul>
                                     <div class="card-body">
                                         <div><a href="#" class="card-link">Télécharger le projet : {{ $project->zip }}</a></div>
-                                        <div><a href="{{ $project->git }}" class="card-link">Dépôt Git</a></div>
+                                        <div><a href="{{ $project->git }}" class="card-link" target="_blank">Dépôt Git</a></div>
                                     </div>
 
                                 </div>

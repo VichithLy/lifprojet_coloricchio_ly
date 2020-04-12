@@ -84,7 +84,7 @@
                             <label for="mark" class="col-md-3 col-form-label text-md-right"><strong>Mark</strong></label>
 
                             <div class="col-md-6">
-                                <input id="mark" type="number" class="form-control" name="mark" value="{{ $project->mark }}" min="0" max="20" autofocus>
+                                <input id="mark" type="number" class="form-control" name="mark" value="{{ $project->mark }}" min="0" max="20" step=".1" autofocus>
 
                                 @error('mark')
                                     <p class="help is-invalid">{{ $message }}</p>

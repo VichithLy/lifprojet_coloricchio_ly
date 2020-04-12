@@ -38,3 +38,26 @@ Route::namespace('author')->prefix('author')->name('author.')->middleware('can:m
     Route::resource('/projects', 'ProjectsController', ['except' => ['show', 'create']]); 
 });
 
+// Download Route
+Route::get('download/{filename}', function($filename)
+{
+    // Check if file exists in app/storage/file folder
+    //$file_path = public_path('uploads/projects') . '/'. $filename;
+    $file_path = URL::to('/uploads/projects'). '/'. $filename;
+    
+    if (file_exists($file_path))
+    {
+        // Send Download
+        return Response::download($file_path, $filename, [
+            'Content-Length: '. filesize($file_path)
+        ]);
+
+ 
+    }
+    else
+    {
+        //dd($file_path);
+        // Error
+        exit('Requested file does not exist on our server!');
+    }
+})->name('project.download');

@@ -21,6 +21,7 @@ class ProjectsTableSeeder extends Seeder
         $projectUe3 = Ue::where('name', 'LIFASR3')->first();
 
         $project1 = Project::create([
+            'name' => 'Projet 1',
             'title' => 'Projet 1',
             'year' => 2018,
             'description' => 'Numquam amicitia ut ordinis quaedam esse tamquam parem Saepe Maximum nostro Scipionis Saepe ita parem amicitia dicam ut posse is Numquam nequaquam dicam numquam ampliores anteposuit esse numquam colebat sunt.',
@@ -28,10 +29,11 @@ class ProjectsTableSeeder extends Seeder
             'mark' => 10,
             'zip' => 'Lien zip Projet 1',
             'git' => 'Lien git Projet 1',
-            'path' => 'Chemin dossier Projet 1'
+            'path' => 'Chemin dossier Projet 1',
         ]);
 
         $project2 = Project::create([
+            'name' => 'Projet 2',
             'title' => 'Projet 2',
             'year' => 2019,
             'description' => 'Sunt qui etiam Sunt in opere putant putant ii contemni ut sunt se se modo putant ii hac quod non fere superiores non non superiores rem ut in putant modo.',
@@ -43,6 +45,7 @@ class ProjectsTableSeeder extends Seeder
         ]);
 
         $project3 = Project::create([
+            'name' => 'Projet 3',
             'title' => 'Projet 3',
             'year' => 2020,
             'description' => 'Caritas autem amicitiae ipsa adducta adducta ex ipsa quod hoc maxime iungeretur sit societate generis adducta natura omnis et ex generis sit et contracta ipsa ut conciliavit ex vis in.',
@@ -53,7 +56,8 @@ class ProjectsTableSeeder extends Seeder
             'path' => 'Chemin dossier Projet 3'
         ]);
 
-        $project3 = Project::create([
+        $project4 = Project::create([
+            'name' => 'Projet 4',
             'title' => 'Projet 4',
             'year' => 2018,
             'description' => 'Description projet 4',
@@ -64,7 +68,8 @@ class ProjectsTableSeeder extends Seeder
             'path' => 'Chemin dossier Projet 4'
         ]);
 
-        $project4 = Project::create([
+        $project5 = Project::create([
+            'name' => 'Projet 5',
             'title' => 'Projet 5',
             'year' => 2017,
             'description' => 'Description projet 5',
@@ -75,7 +80,8 @@ class ProjectsTableSeeder extends Seeder
             'path' => 'Chemin dossier Projet 5'
         ]);
 
-        $project5 = Project::create([
+        $project6 = Project::create([
+            'name' => 'Projet 5',
             'title' => 'Projet 6',
             'year' => 2020,
             'description' => 'Description projet 6',
@@ -90,5 +96,8 @@ class ProjectsTableSeeder extends Seeder
         $project2->ues()->attach($projectUe2);
         $project3->ues()->attach($projectUe3);
 
+        $project4->ues()->attach($projectUe1);
+        $project5->ues()->attach($projectUe2);
+        $project6->ues()->attach($projectUe3);
     }
 }
