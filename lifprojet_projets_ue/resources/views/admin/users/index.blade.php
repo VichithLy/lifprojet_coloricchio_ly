@@ -1,24 +1,25 @@
 <style>
 
     /* Classe obligatoire pour les flèches */
-.flecheDesc {
-    width: 0; 
-    height: 0; 
-    float:right;
-    margin: 10px;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-bottom: 5px solid black;
-  }
-  .flecheAsc {
-    width: 0; 
-    height: 0;
-    float:right;
-    margin: 10px;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 5px solid black;
-  }
+    .flecheDesc {
+        width: 0; 
+        height: 0; 
+        float:right;
+        margin: 10px;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-bottom: 5px solid black;
+      }
+      .flecheAsc {
+        width: 0; 
+        height: 0;
+        float:right;
+        margin: 10px;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-top: 5px solid black;
+      }
+    
 
 </style>
 
@@ -30,7 +31,7 @@
        [].forEach.call( document.getElementsByClassName("avectri"), function(oTableau) {
        var oEntete = oTableau.getElementsByTagName("tr")[0];
        var nI = 1;
-      [].forEach.call( oEntete.querySelectorAll("th"), function(oTh) {
+      [].forEach.call( oEntete.querySelectorAll("th:not([class])"), function(oTh) {
         oTh.addEventListener("click", twTriTableau, false);
         oTh.setAttribute("data-pos", nI);
         if(oTh.getAttribute("data-tri")=="1") {
@@ -128,13 +129,13 @@
 
                     <thead>
                         <tr>
-                            <th class="selection" data-tri="1" data-type="num" scope="col" >#</th>
-                            <th class="selection" data-tri="1" data-type="num" scope="col">Name</th>
-                            <th class="selection" data-tri="1" data-type="num" scope="col">Email</th>       
-                            <th class="selection" data-tri="1" data-type="num" scope="col">UE</th>
-                            <th class="selection" data-tri="1" data-type="num" scope="col">Roles</th>
-                            <th class="selection" data-tri="1" data-type="num" scope="col">Created at</th>
-                            <th class="selection" data-tri="1" data-type="num" scope="col">Action</th>
+                            <th scope="col" >#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>       
+                            <th scope="col">UE</th>
+                            <th scope="col">Roles</th>
+                            <th scope="col">Created at</th>
+                            <th class="no_arrow" scope="col">Action</th>
                         </tr>
                     </thead>
                     
