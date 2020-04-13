@@ -251,7 +251,7 @@ class ProjectsController extends Controller
     public function downloadReadme(Request $request, $uuid)
     {
         $project = Project::where('uuid', $uuid)->firstOrFail();
-        $pathToFile = storage_path('uploads/projects/extracted/' . $project->name . $project->readme);
+        $pathToFile = storage_path('uploads/projects/extracted/' . $project->name . '/' . $project->readme);
         
         if(is_file($pathToFile)) {
             return response()->download($pathToFile);
