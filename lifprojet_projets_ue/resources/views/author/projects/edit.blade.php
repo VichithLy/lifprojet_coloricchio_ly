@@ -141,7 +141,7 @@ function verifReadme()
 
                         <div class="form-group row">
                             <input type="checkbox" id="checkbox_description" checked onChange="verifDescription();">
-                            <label for="description" class="col-md-3 col-form-label text-md-right"><strong>Description</strong></label>
+                            <label for="description" class="col-md-3 col-form-label text-md-right"><strong>Comment</strong></label>
 
                             <div class="col-md-6">
                                 <textarea id="description" class="form-control" name="description" maxlength="499" autofocus rows="3">{{ $project->description }}</textarea>
@@ -189,7 +189,7 @@ function verifReadme()
                             <label for="readme" class="col-md-3 col-form-label text-md-right"><strong>README file path :</strong></label>
                             
                             <div id="readme" class="col-md-6">
-                                Chemin vers le README
+                                {{ $project->readme }}
                             </div>
                         </div>
                         
@@ -199,7 +199,7 @@ function verifReadme()
                             <label for="zip" class="col-md-3 col-form-label text-md-right"><strong>Zip file path :</strong></label>
                             
                             <div class="col-md-6">
-                                Chemin vers le fichier zip
+                                {{ '/' . $project->zip }}
                             </div>
                         </div>               
 
@@ -209,7 +209,7 @@ function verifReadme()
                             <label for="path" class="col-md-3 col-form-label text-md-right"><strong>Project path :</strong></label>
                             
                             <div class="col-md-6">
-                                Chemin vers le dossier projet
+                                {{ '/uploads/projects/' . $project->name }}
                             </div>
                         </div>
 

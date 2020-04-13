@@ -7,6 +7,7 @@ use Gate;
 use Auth;
 use File;
 use ZipArchive;
+use Webpatser\Uuid\Uuid;
 use App\Project;
 use App\Ue;
 use App\Http\Controllers\Controller;
@@ -94,7 +95,7 @@ class ProjectsController extends Controller
             if($file = $request->file('file')) { //Si le fichier existe
 
                 //Nom fichier avec extension
-                $name = $request->file->getClientOriginalName();
+                $name = time().'_'.$request->file->getClientOriginalName();
                 //Nom du fichier avec date d'upload
                 $fileName = time().'.'.$request->file->extension(); 
 
@@ -103,7 +104,7 @@ class ProjectsController extends Controller
                     //Dossier d'upload
                 $target_path = 'uploads/projects';
                     //Enregistrement vers le dossier
-                if($file->move(public_path($target_path), $name)) {
+                if($file->move(storage_path($target_path), $name)) {
                     $request->session()->flash('success', 'File uploaded successfully');
                 }
 
@@ -114,9 +115,9 @@ class ProjectsController extends Controller
                 $zip_target_path = $target_path . '/extracted/' . $name;
                 
                     //On ne vérifie pas que le fichier à upload n'existe pas déjà !
-                if ($zipfile->open(public_path($target_path . '/' . $name)) === TRUE) {
+                if ($zipfile->open(storage_path($target_path . '/' . $name)) === TRUE) {
                     
-                    $zipfile->extractTo(public_path($zip_target_path));
+                    $zipfile->extractTo(storage_path($zip_target_path));
                     $zipfile->close();
 
                     $request->session()->flash('success', 'File extracted successfully');
@@ -130,7 +131,7 @@ class ProjectsController extends Controller
                 // ----------------------- //
 
                 //Liste des fichiers dans le dossier extrait du zip
-                $all_project_files = File::allfiles(public_path($zip_target_path));
+                $all_project_files = File::allfiles(storage_path($zip_target_path));
 
                     //Récupère tous les fichiers qui possède une extension particulière
                         //images
@@ -154,19 +155,20 @@ class ProjectsController extends Controller
                 }
 
                 //dd($img_files_path);
-
+                
                 //Infos utiles pour base de donnée
+                
                     //Titre (nom sans l'extension)
-                $title = pathinfo($name, PATHINFO_FILENAME);
+                $title = pathinfo($request->file->getClientOriginalName(), PATHINFO_FILENAME);
                     //Année
                 $year = $request->year;
                     //UE
                 $ue = $request->ue;
                     //Lien README
-                $readme_link = $txt_files_path;
+                $readme_link = $txt_files_path[0] ?? '';
                 //dd($readme_link);
                     //Lien zip
-                $zip_link = public_path($zip_target_path);
+                $zip_link = $zip_target_path;
                 //dd($zip_link);
 
 
@@ -194,12 +196,12 @@ class ProjectsController extends Controller
                 $project_ue = Ue::where('id', $ue)->first();
 
                 if($project_created = Project::create([
+                    'uuid' => (string)Uuid::generate(),
                     'name' => $name,
                     'title' => $title,
                     'year' => $year,
                     'readme' => $readme_link,
                     'zip' => $zip_link,
-                    'path' => '',
                     'images' => $img_files_path
                     
                 ])) {
@@ -218,6 +220,51 @@ class ProjectsController extends Controller
         }
         
         return redirect()->route('author.projects.index');
+        
+    }
+
+    //Download an uploaded file
+    public function downloadZip(Request $request, $uuid)
+    {
+        
+        $project = Project::where('uuid', $uuid)->firstOrFail();
+        $pathToFile = storage_path('uploads/projects/' . $project->name);
+
+        //Rajouter cas 404 not found
+        if(is_file($pathToFile)) {
+
+            return response()->download($pathToFile);
+
+        } else {
+
+            $request->session()->flash('error', "This projects can't be downloaded");
+
+            //Redirection suivant les rôles
+            if (Auth::user()->hasAnyRoles(['admin', 'author'])) {
+                return redirect()->route('author.projects.index');
+            }
+            return redirect()->route('projects.showAll');
+
+        }
+    }
+
+    public function downloadReadme(Request $request, $uuid)
+    {
+        $project = Project::where('uuid', $uuid)->firstOrFail();
+        $pathToFile = storage_path('uploads/projects/extracted/' . $project->name . $project->readme);
+        
+        if(is_file($pathToFile)) {
+            return response()->download($pathToFile);
+        } else { 
+            
+            $request->session()->flash('error', "This projects doesn't have any README file");
+
+            if (Auth::user()->hasAnyRoles(['admin', 'author'])) {
+                return redirect()->route('author.projects.index');
+            }
+            return redirect()->route('projects.showAll');
+        }
+
         
     }
 
@@ -254,9 +301,6 @@ class ProjectsController extends Controller
             //dd($images_array);
             
         }*/
-        
-        
-        
         
         //->ues()->pluck('name')->toArray();
 
@@ -328,9 +372,17 @@ class ProjectsController extends Controller
             return redirect(route('home'));
         } 
 
-        //Suppression de l'ue
+        //BDD
+            //Suppression de l'ue
         $project->ues()->detach();
         $project->delete();
+
+        //Fichiers
+        $file_zip = storage_path('uploads/projects/' . $project->name);
+        $file_extracted = storage_path('uploads/projects/extracted/' . $project->name);
+        File::delete($file_zip); //zip
+        File::deleteDirectory($file_extracted); //dossier
+
         $request->session()->flash('success', $project->title . ' has been deleted');
 
         return redirect()->route('author.projects.index');

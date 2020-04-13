@@ -15,6 +15,7 @@ class CreateProjectsTable extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->uuid('uuid')->nullable(); //Pour le download (cache l'id original)
             $table->string('name');
             $table->string('title');
             $table->integer('year');
@@ -23,7 +24,6 @@ class CreateProjectsTable extends Migration
             $table->float('mark', 4, 2)->nullable()->unsigned();
             $table->string('zip');
             $table->string('git')->nullable();
-            $table->string('path');
             $table->json('images')->nullable();
             $table->timestamps();
         });

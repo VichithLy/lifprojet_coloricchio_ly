@@ -17,7 +17,7 @@ class Project extends Model
     ];
 
     protected $fillable = [
-        'title', 'year', 'zip', 'path', 'images', 'name',
+        'uuid', 'title', 'year', 'zip', 'images', 'name', 'readme'
     ];
 
     //On garde le cas où un projet peut avoir plusieurs UE

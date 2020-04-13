@@ -111,12 +111,13 @@
                                     </div>
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item">
-                                            <a href="#" class="card-link">README : {{ $project->readme }}</a></li>
+                                            <a href="{{ route('projects.downloadReadme', $project->uuid ?? '') }}">README
+                                        </li>
                                         <li class="list-group-item">Note : <strong>{{ $project->mark }}/20</strong></li>
                                     </ul>
                                     <div class="card-body">
-                                        <div><a href="#" class="card-link">Télécharger le projet : {{ $project->zip }}</a></div>
-                                        <div><a href="{{ $project->git }}" class="card-link" target="_blank">Dépôt Git</a></div>
+                                        <div><a href="{{ route('projects.downloadZip', $project->uuid ?? '') }}" class="card-link">Télécharger le projet</a></div>
+                                        <div><a href="{{ $project->git ?? '' }}" class="card-link" target="_blank">Dépôt Git</a></div>
                                     </div>
 
                                 </div>

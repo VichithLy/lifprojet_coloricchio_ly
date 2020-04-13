@@ -138,12 +138,12 @@
                         </div>
 
                         <div class="m-3 pt-2 pr-2 pl-2 border rounded">
-                            Pré-requis des projet à upload : 
+                            Pré-requis des projets à upload : 
                             <ul>
-                                <li>Dossier au format .zip <strong>UNIQUEMENT</strong></li>
-                                <li>Un titre de dossier explicite (nom projet et noms étudiant)</li>
-                                <li>Des images au format .png ou .jpg ou .jpeg</li>
-                                <li>Un fichier README au format .txt ou .md</li>
+                                <li>Dossier au format <strong>.zip UNIQUEMENT</strong></li>
+                                <li>Un titre de dossier explicite (nom du projet et noms des étudiant)</li>
+                                <li>Des images au format <strong>.png</strong> ou <strong>.jpg</strong> ou <strong>.jpeg</strong></li>
+                                <li>Un fichier README au format <strong>.txt</strong> ou <strong>.md</strong></li>
                             </ul>
                         </div>
 
@@ -215,13 +215,14 @@
                                 <th scope="col">Mark</th>
                                 <th scope="col">Zip</th>
                                 <th scope="col">Git</th>
-                                <th scope="col">Path</th>
                                 <th scope="col">Created at</th>
                                 <th class="no_arrow" scope="col">Action</th>
                             </tr>
                         </thead>
                         
                         <tbody>
+
+                                
                             
                             @foreach ($projects as $project)
                                 
@@ -231,17 +232,18 @@
                                     <td>{{ $project->year }}</td>                                
                                     <td>{{ implode(', ', $project->ues()->pluck('name')->toArray()) }}</td>
                                     <td>{{ $project->description }}</td>
-                                    <td>{{ $project->readme }}</td>
+                                    <td><a href="{{ route('projects.downloadReadme', $project->uuid ?? '') }}">README</td>
                                     <td>{{ $project->mark }}/20</td>
-                                    <td><a href="{{ route('project.download', $project->name) }}">Thing</a></td>
-                                    <td>{{ $project->git }}</td>
-                                    <td>{{ $project->path }}</td>
+                                    <td>
+                                        <a href="{{ route('projects.downloadZip', $project->uuid ?? '') }}">Télécharger le projet</a>
+                                    
+                                    </td>
+                                    <td><a href="{{ $project->git }}" target="_blank">Dépôt git</td>
                                     <td>{{ $project->created_at }}</td>
                                     <td>
                                         <a href="{{ route('author.projects.edit', $project->id) }}"> 
                                             <button type="button" class="btn btn-primary mb-2">Edit</button>
                                         </a>
-
                                         
                                         @can('manage-projects')    
                                             <form action="{{ route('author.projects.destroy', $project->id) }}" method="POST">

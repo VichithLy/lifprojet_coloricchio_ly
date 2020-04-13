@@ -1,0 +1,95 @@
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+minIcham.cpp
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Description du programme :
+
+- Casse-briques basique et animations diverses
+
+- Les collisions et rebonds entre la balle et les briques/la palette font appel à des mathématiques avancées
+  -> (produit vectoriel, produit scalaire, normalisation de vecteurs, paramétrisation de droites, equation trigonométriques)
+
+
+- Utilisation des fonctions d'affichage de Grapic
+
+- Séparation de chaque problème rencontré en différents algorithmes, structures, etc...
+  -> (Affichage, gestion de la balle, gestion des briques, gestion de la palette, etc.)
+
+
+- 3 parties majeures :
+  -> Définitions
+  -> Paramètres d'initialisation
+  -> Paramètres qui doivent être mis à jour
+
+- 1 Algo d'animation pour introduire les briques dans le jeu
+  -> Utilisation d'une méthode de position actuelle et position d'arrivée
+
+- 1 Algo "d'animation" pour le fond
+  -> Un shift continu est effectué sur la couleur rouge du fond
+
+- Lorsque la balle tombe, la partie est finie, un message s'affiche et le programme se réinitialise pour relancer une partie au bout de 5 secondes
+
+- Affichage d'un score
+
+- Optimisation de la fonction color() :
+  -> au lieu d'utiliser un code RGB, la fonction peu faire appel à des "pseudo-constantes" contenant leur code RGB respectif
+  -> exemple : color(red) est équivalent à color(255, 0, 0, 255)
+
+- Collisions traitées en X et en Y
+
+- Petite optimisation des collisions :
+  
+  -> D'abord si une brique n'existe pas, on ne teste pas de collisions dessus
+
+  -> On teste ensuite les collisions par prédiction d'intersection de la balle sur une droite
+     -> Si la balle ne touche pas la droite, alors on ne teste pas la collision plus en profondeur
+  
+  -> Si il y a collision avec les droites, on teste si il y a collision avec le segment associé
+     -> Si il y a collision, on compute la balle pour faire un rebond et on "supprime" la brique touchée
+     -> Sinon, on ne teste pas la collision plus en profondeur
+
+
+- Tracking de la palette avec la balle en début de partie
+
+- Quelques problèmes avec la fonction elapsedTime() dus à l'instabilité de la fonction et à sa définition peu claire
+
+
+- Pour une raison de complexité > n² je pense, le programme ne fonctionne qu'à un nombre d'IMS extrêmement faible sur certains ordinateurs, cependant, il fonctionne tout à fait normalement sur beaucoup d'ordinateurs (par exemple, les ordinateurs des salles de TP de Nautibus font tourner le programme sans problème)
+
+
+- Utilisation du setKeyRepeatMode() pour des mouvements plus fluides de la palette
+
+- Il y a possibilité d'ajouter d'autres balles en modifiant le code qui est assez propore (il suffit de changer une variable et dans la boucle d'initialisation de la balle, on donne des valeurs aux vecteurs différentes)
+  -> J'ai préféré ne pas en ajouter à cause de la compléxité > n², à chaque balle ajouté, le nombre de tests augmente beaucoup, ce qui réduit encore le nombres d'IMS 
+
+- La balle affiche la valeur de son vecteur vitesse actuel
+
+- Lorsque la balle est renvoyée, que ce soit sur la palette ou sur une brique, la norme du vecteur vitesse reste inchangée
+
+- Un design minimaliste
+
+(pas de briques différentes pour le moment)
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Pour jouer :
+
+ -> Une animation des briques introduit la partie, lorsque la partie doit commencer, le fond(background) se met à varier en teinte de rouge
+ -> Les flèches de gauche et de droite permettent de déplacer la palette
+ -> Au début d'une partie, la balle track le milieu de la palette, pour lancer la balle à l'horizontale, il suffit de placer la palette ou l'on veut et ensuite appuyer sur la barre d'espace
+ -> Il est possible de lancer la balle avant la fin de l'animation des briques, les collisions fonctionneront toujours correctement, ce n'est pas un bug mais une mécanique de jeu (qui peut être exploité plus en profondeur dans un meilleur programme)
+ -> Il est possible de modifier les valeurs des différents déplacements (palette, vecteurs de vitesse, vitesse d'animation) dans le code, car il a été simplifié pour ça, cela peut "compenser" éventuellement un nombre d'IMS faible
+ -> Une astuce : Si vous lancez la balle depuis la position initiale de la palette, vous allez en quelques sortes casser toutes les paires de briques au dessus de vous jusqu'à atteindre le plafond au lieu de casser les briques une par une
+ -> La balle rebondit avec un angle différent selon l'endroit touché sur la palette, indépendemment de la vitesse de cette dernière
+ -> Le score est affiché en haut à droite, le score augmente de 50 à chaque brique cassée
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Liens :
+
+Il y a un lien évident avec le TP Particules vu en LIFAMI
+Entre autres avec les collisions, la balle et son vecteur vitesse
+La balle est plus ou moins une particule
+
