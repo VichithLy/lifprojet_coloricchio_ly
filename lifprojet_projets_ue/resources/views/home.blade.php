@@ -21,10 +21,15 @@
                     <!-- =================== BARRE DE RECHERCHE ====================== -->
 
                     <nav class="navbar navbar-light mb-3">
-                        <form class="form-inline mb-2">
+
+                        
+                            
                             <input class="form-control mr-sm-2" type="search" placeholder="Search a project" aria-label="Search">
                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                        </form>
+                        
+                    <form class="form-inline mb-2" action="{{ route('projects.showAll') }}" method="GET">
+
+                            @csrf
 
                         <div class="input-group input-group-sm">
 
@@ -61,41 +66,47 @@
                                     <option>Note</option>
                                 </select>
                             </div>
+                            
 
                         </div>
+
+                        <button type="submit" class="btn btn-primary float-right">
+                            Chercher
+                        </button>
+
+                        </form>
                     </nav>
 
                     
+                    <!--<img src="{{ asset('storage/uploads/projects/extracted/full_jpg.jpg') }}" alt="aaa">-->
+                    
+
                     <!-- =================== CARTE PROJET ====================== -->
-                    <div class="row">
+                    <div class="row">                      
                         
+                    
+
                         @foreach ($projects as $project)
                             
                             <div class="col-xs-12 col-sm-6 col-md-4">
                                 <div class="card border-dark mb-4">
-                                    <!-- Images -->
-                                    <div id="carouselExampleControls{{$project->id}}" class="carousel slide" data-ride="carousel">
-                                        <div class="carousel-inner">
-                                            <div class="carousel-item active">
-                                            <img class="card-img-top" src="{{ URL::to('/') }}/images/dora.png" alt="First slide">
-                                            </div>
-                                            <div class="carousel-item">
-                                            <img class="card-img-top" src="{{ URL::to('/') }}/images/dora.png" alt="Second slide">
-                                            </div>
-                                            <div class="carousel-item">
-                                            <img class="card-img-top" src="{{ URL::to('/') }}/images/dora.png" alt="Third slide">
-                                            </div>
-                                        </div>
-                                        <a class="carousel-control-prev" href="#carouselExampleControls{{$project->id}}" role="button" data-slide="prev">
-                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                            <span class="sr-only">Previous</span>
-                                        </a>
-                                        <a class="carousel-control-next" href="#carouselExampleControls{{$project->id}}" role="button" data-slide="next">
-                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                            <span class="sr-only">Next</span>
-                                        </a>
-                                    </div>  
                                     
+
+                                    
+
+                                    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel" data-interval="1000">
+                                        <div class="carousel-inner">
+                                            
+                                            @if (isset($projects->find($project->id)->images[0]))
+                                                    <div class="carousel-item active">
+                                                        <img class="d-block w-100" style="max-height:15em" src="{{URL::to('/uploads/projects/extracted/' . $project->name . '/' . $projects->find($project->id)->images[0]) }}" alt="First slide">
+                                                    </div>    
+                                                @endif
+
+                                        </div>
+                                    </div>
+
+    
                                     <div class="card-body">
                                         <h5 class="card-title text-center"><strong>{{ $project->title }}</strong></h5>
 
@@ -111,7 +122,7 @@
                                     </div>
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item">
-                                            <a href="{{ route('projects.downloadReadme', $project->uuid ?? '') }}">README
+                                            <a href="{{ route('projects.downloadReadme', $project->uuid ?? '') }}">README</a>
                                         </li>
                                         <li class="list-group-item">Note : <strong>{{ $project->mark }}/20</strong></li>
                                     </ul>

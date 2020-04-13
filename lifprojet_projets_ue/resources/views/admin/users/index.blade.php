@@ -124,8 +124,8 @@
                 <div class="card-header">Users management</div>
 
                 <div class="card-body">
-                    
-                    <table class="avectri">
+                
+                    <table class="avectri table table-bordered">
 
                     <thead>
                         <tr>

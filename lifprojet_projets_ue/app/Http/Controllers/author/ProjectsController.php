@@ -5,6 +5,7 @@ namespace App\Http\Controllers\author;
 use DB;
 use Gate;
 use Auth;
+use Response;
 use File;
 use ZipArchive;
 use Webpatser\Uuid\Uuid;
@@ -104,7 +105,7 @@ class ProjectsController extends Controller
                     //Dossier d'upload
                 $target_path = 'uploads/projects';
                     //Enregistrement vers le dossier
-                if($file->move(storage_path($target_path), $name)) {
+                if($file->move(public_path($target_path), $fileName)) {
                     $request->session()->flash('success', 'File uploaded successfully');
                 }
 
@@ -112,12 +113,12 @@ class ProjectsController extends Controller
                     //Extraction du zip dans un dossier /extracted
                 $zipfile = new ZipArchive;
                 //$zip_target_path = public_path('uploads/projects/extracted/' . $name);
-                $zip_target_path = $target_path . '/extracted/' . $name;
+                $zip_target_path = $target_path . '/extracted/' . $fileName;
                 
                     //On ne vérifie pas que le fichier à upload n'existe pas déjà !
-                if ($zipfile->open(storage_path($target_path . '/' . $name)) === TRUE) {
+                if ($zipfile->open(public_path($target_path . '/' . $fileName)) === TRUE) {
                     
-                    $zipfile->extractTo(storage_path($zip_target_path));
+                    $zipfile->extractTo(public_path($zip_target_path));
                     $zipfile->close();
 
                     $request->session()->flash('success', 'File extracted successfully');
@@ -131,11 +132,11 @@ class ProjectsController extends Controller
                 // ----------------------- //
 
                 //Liste des fichiers dans le dossier extrait du zip
-                $all_project_files = File::allfiles(storage_path($zip_target_path));
+                $all_project_files = File::allfiles(public_path($zip_target_path));
 
                     //Récupère tous les fichiers qui possède une extension particulière
                         //images
-                $img_files = preg_grep('/\.(png|jpg|jpeg)/', $all_project_files);
+                $img_files = preg_grep('/\.(png|PNG|jpg|JPG|jpeg|JPEG)/', $all_project_files);
 
                 $img_files_path = [];
                 foreach ($img_files as $img) {
@@ -197,7 +198,7 @@ class ProjectsController extends Controller
 
                 if($project_created = Project::create([
                     'uuid' => (string)Uuid::generate(),
-                    'name' => $name,
+                    'name' => $fileName,
                     'title' => $title,
                     'year' => $year,
                     'readme' => $readme_link,
@@ -228,7 +229,7 @@ class ProjectsController extends Controller
     {
         
         $project = Project::where('uuid', $uuid)->firstOrFail();
-        $pathToFile = storage_path('uploads/projects/' . $project->name);
+        $pathToFile = public_path('uploads/projects/' . $project->name);
 
         //Rajouter cas 404 not found
         if(is_file($pathToFile)) {
@@ -251,7 +252,7 @@ class ProjectsController extends Controller
     public function downloadReadme(Request $request, $uuid)
     {
         $project = Project::where('uuid', $uuid)->firstOrFail();
-        $pathToFile = storage_path('uploads/projects/extracted/' . $project->name . '/' . $project->readme);
+        $pathToFile = public_path('uploads/projects/extracted/' . $project->name . '/' . $project->readme);
         
         if(is_file($pathToFile)) {
             return response()->download($pathToFile);
@@ -279,33 +280,15 @@ class ProjectsController extends Controller
         //
     }
 
-    public function showAll(Project $project)
+    public function showAll(Request $request, Project $project)
     {
         $projects = Project::all();
 
-        $images_array = [];
-
-        /*
-        foreach ($projects as $project) {
-
-            //dd($projects->find(8)->images);
-            //dd(is_array($projects->find(9)->images));
-            //dd((array)$project->images);
-
-            foreach ($project->images as $image)
-            {
-                
-                //echo $image, "</br>";
-            }
-
-            //dd($images_array);
-            
-        }*/
         
-        //->ues()->pluck('name')->toArray();
 
         return view('home')->with('projects', $projects);
     }
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -378,8 +361,8 @@ class ProjectsController extends Controller
         $project->delete();
 
         //Fichiers
-        $file_zip = storage_path('uploads/projects/' . $project->name);
-        $file_extracted = storage_path('uploads/projects/extracted/' . $project->name);
+        $file_zip = public_path('uploads/projects/' . $project->name);
+        $file_extracted = public_path('uploads/projects/extracted/' . $project->name);
         File::delete($file_zip); //zip
         File::deleteDirectory($file_extracted); //dossier
 

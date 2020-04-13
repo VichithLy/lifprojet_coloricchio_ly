@@ -29,6 +29,7 @@ class ProjectsTableSeeder extends Seeder
             'description' => 'Numquam amicitia ut ordinis quaedam esse tamquam parem Saepe Maximum.',
             'mark' => 10,
             'zip' => '',
+            'images' => [],
             'git' => 'https://github.com/',
         ]);
 
@@ -40,6 +41,7 @@ class ProjectsTableSeeder extends Seeder
             'description' => 'Sunt qui etiam Sunt in opere putant putant ii contemni ut sunt se se modo.',
             'mark' => 15,
             'zip' => '',
+            'images' => [],
             'git' => 'https://github.com/',
         ]);
 
@@ -51,6 +53,7 @@ class ProjectsTableSeeder extends Seeder
             'description' => 'Caritas autem amicitiae ipsa adducta adducta ex ipsa quod hoc maxime.',
             'mark' => 20,
             'zip' => '',
+            'images' => [],
             'git' => 'https://github.com/',
         ]);
 

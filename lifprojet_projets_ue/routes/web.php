@@ -40,3 +40,27 @@ Route::namespace('author')->prefix('author')->name('author.')->middleware('can:m
 
 Route::get('projects/{uuid}/downloadZip', 'author\ProjectsController@downloadZip')->name('projects.downloadZip');
 Route::get('projects/{uuid}/downloadReadme', 'author\ProjectsController@downloadReadme')->name('projects.downloadReadme');
+
+Route::get('image/{project?}/{filename?}', 'author\ProjectsController@displayImage')->name('projects.displayImage');
+
+
+//Displaying images
+
+/*Route::get('image/{path?}', function ($path)
+{
+
+    $path = storage_path('/' . $path);
+
+    if (!File::exists($path)) {
+        abort(404);
+    }
+
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+
+    return $response;
+    
+})->where('path', '[A-Za-z0-9_/-]+(.*)')->name('projects.image');*/

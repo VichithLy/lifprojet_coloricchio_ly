@@ -202,64 +202,73 @@
 
                     <!-- =================== PROJECTS MANAGEMENT ====================== -->
 
-                    <table class="avectri">
+                    
 
-                        <thead>
-                            <tr>
-                                <th scope="col" >#</th>
-                                <th scope="col">Title</th>
-                                <th scope="col">Year</th>       
-                                <th scope="col">UE</th>
-                                <th scope="col">Comment</th>
-                                <th scope="col">README</th>
-                                <th scope="col">Mark</th>
-                                <th scope="col">Zip</th>
-                                <th scope="col">Git</th>
-                                <th scope="col">Created at</th>
-                                <th class="no_arrow" scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        
-                        <tbody>
+                    <div class="table-responsive">
 
-                                
-                            
-                            @foreach ($projects as $project)
-                                
+                        <table class="avectri table table-bordered ">
+
+                            <thead>
                                 <tr>
-                                    <th scope="row">{{ $project->id }}</th>
-                                    <td>{{ $project->title }}</td>
-                                    <td>{{ $project->year }}</td>                                
-                                    <td>{{ implode(', ', $project->ues()->pluck('name')->toArray()) }}</td>
-                                    <td>{{ $project->description }}</td>
-                                    <td><a href="{{ route('projects.downloadReadme', $project->uuid ?? '') }}">README</td>
-                                    <td>{{ $project->mark }}/20</td>
-                                    <td>
-                                        <a href="{{ route('projects.downloadZip', $project->uuid ?? '') }}">Télécharger le projet</a>
+                                    <th class="no_arrow" scope="col">Action</th>
+                                    <th scope="col" >#</th>                                  
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Year</th>       
+                                    <th scope="col">UE</th>
+                                    <th scope="col">Comment</th>
+                                    <th scope="col">README</th>
+                                    <th scope="col">Mark</th>
+                                    <th scope="col">Zip</th>
+                                    <th scope="col">Git</th>
+                                    <th scope="col">Created at</th>
                                     
-                                    </td>
-                                    <td><a href="{{ $project->git }}" target="_blank">Dépôt git</td>
-                                    <td>{{ $project->created_at }}</td>
-                                    <td>
-                                        <a href="{{ route('author.projects.edit', $project->id) }}"> 
-                                            <button type="button" class="btn btn-primary mb-2">Edit</button>
-                                        </a>
-                                        
-                                        @can('manage-projects')    
-                                            <form action="{{ route('author.projects.destroy', $project->id) }}" method="POST">
-                                                @csrf
-
-                                                {{ method_field('DELETE') }}
-
-                                                <button type="submit" class="btn btn-danger">Delete</button>
-                                            </form> 
-                                        @endcan
-                                    </td>                    
                                 </tr>
-                        @endforeach
-                        </tbody>
+                            </thead>
+                            
+                            <tbody>
 
-                    </table>
+                                @foreach ($projects as $project)
+                                    
+                                    <tr>
+
+                                        <th>
+                                            <a href="{{ route('author.projects.edit', $project->id) }}"> 
+                                                <button type="button" class="btn btn-primary mb-2">Edit</button>
+                                            </a>
+                                            
+                                            @can('manage-projects')    
+                                                <form action="{{ route('author.projects.destroy', $project->id) }}" method="POST">
+                                                    @csrf
+
+                                                    {{ method_field('DELETE') }}
+
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form> 
+                                            @endcan
+                                        </th>       
+
+                                        <td scope="row">{{ $project->id }}</td>
+
+                                    
+                                        <td>{{ $project->title }}</td>
+                                        <td>{{ $project->year }}</td>                                
+                                        <td>{{ implode(', ', $project->ues()->pluck('name')->toArray()) }}</td>
+                                        <td>{{ $project->description }}</td>
+                                        <td><a href="{{ route('projects.downloadReadme', $project->uuid ?? '') }}">README</td>
+                                        <td>{{ $project->mark }}/20</td>
+                                        <td>
+                                            <a href="{{ route('projects.downloadZip', $project->uuid ?? '') }}">Télécharger le projet</a>
+                                        
+                                        </td>
+                                        <td><a href="{{ $project->git }}" target="_blank">Dépôt git</td>
+                                        <td>{{ $project->created_at }}</td>
+                                                     
+                                    </tr>
+                            @endforeach
+                            </tbody>
+
+                        </table>
+                    </div>
 
                 </div>
             </div>
