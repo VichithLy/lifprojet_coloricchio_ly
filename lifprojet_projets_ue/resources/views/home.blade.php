@@ -23,9 +23,10 @@
                     <nav class="navbar navbar-light mb-3">
 
                         
-                            
+                    <form class="form-inline mb-2" action="" method="GET">            
                             <input class="form-control mr-sm-2" type="search" placeholder="Search a project" aria-label="Search">
                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>    
                         
                     <form class="form-inline mb-2" action="{{ route('projects.showAll') }}" method="GET">
 
@@ -36,23 +37,23 @@
                             <div class="input-group-prepend ">
                                 <span class="input-group-text rounded" id="inputGroup-sizing-sm">UE</span>
                             </div>
-                            <div class="mr-sm-5">
-                                <select class="form-control form-control-sm">
-                                    <option>Tous</option>
-                                    <option>LIFO63</option>
-                                    <option>LIFAP6</option>
+                            <div class="mr-sm-3">
+                                <select class="form-control form-control-sm" name="ue">
+                                    <option value="1" selected>Tous</option>
+                                    <option value="2">LIFO63</option>
+                                    <option value="3">LIFAP6</option>
                                 </select>
                             </div>
 
                             <div class="input-group-prepend ">
                                 <span class="input-group-text rounded" id="inputGroup-sizing-sm">Année</span>
                             </div>
-                            <div class="mr-sm-5">
-                                <select class="form-control form-control-sm">
-                                    <option>Toutes</option>
-                                    <option>2018</option>
-                                    <option>2019</option>
-                                    <option>2020</option>
+                            <div class="mr-sm-3">
+                                <select class="form-control form-control-sm" name="year">
+                                    <option value="1">Toutes</option>
+                                    <option value="2">2018</option>
+                                    <option value="3">2019</option>
+                                    <option value="4">2020</option>
                                 </select>
                             </div>
 
@@ -60,18 +61,18 @@
                                 <span class="input-group-text rounded" id="inputGroup-sizing-sm">Trier par</span>
                             </div>
                             <div>
-                                <select class="form-control form-control-sm">
-                                    <option>Date d'ajout</option>
-                                    <option>Ordre alphabétique</option>
-                                    <option>Note</option>
+                                <select class="form-control form-control-sm" name="sort">
+                                    <option value="1">Date d'ajout</option>
+                                    <option value="2">Ordre alphabétique</option>
+                                    <option value="3">Note</option>
                                 </select>
                             </div>
                             
 
                         </div>
 
-                        <button type="submit" class="btn btn-primary float-right">
-                            Chercher
+                        <button type="submit" class="btn btn-secondary btn-sm float-right ml-2">
+                            Submit
                         </button>
 
                         </form>

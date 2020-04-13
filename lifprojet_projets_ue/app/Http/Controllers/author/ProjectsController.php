@@ -283,7 +283,24 @@ class ProjectsController extends Controller
     public function showAll(Request $request, Project $project)
     {
         $projects = Project::all();
+        
+        if(isset($request)) {
 
+            if($request->sort == 1) {
+                $projects = Project::orderByDesc('created_at')->get();
+
+            } else if ($request->sort == 2) {
+
+                $projects = Project::orderBy('title')->get();
+
+            } else if ($request->sort == 3) {
+
+                $projects = Project::orderByDesc('mark')->get();
+
+            } 
+
+            
+        } 
         
 
         return view('home')->with('projects', $projects);
