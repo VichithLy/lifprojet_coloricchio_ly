@@ -23,7 +23,6 @@ LIFPROJET : Site web de gestion de projets d'Unités d'Enseignement (UE)
             * Installer artisan à la racine du projet : php artisan
             * Ajouter les migrations Laravel dans la BDD : php artisan migrate
             * Peupler la BDD : php artisan db:seed (ATTENTION Faire cette commande deux fois pour peupler les utilisateurs et les projets)
-            
     2. Ouvrir depuis un navigateur : [http://localhost/lifprojet_coloricchio_ly/lifprojet_projets_ue/public](http://localhost/lifprojet_coloricchio_ly/lifprojet_projets_ue/public)
 
     
