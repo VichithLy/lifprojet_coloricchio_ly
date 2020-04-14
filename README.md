@@ -5,7 +5,7 @@
 LIFPROJET : Site web de gestion de projets d'Unités d'Enseignement (UE)
 
 **Prérequis**
-*  Installer Composer : [(https://getcomposer.org/download/](https://getcomposer.org/download/)
+*  Installer Composer : [https://getcomposer.org/download/](https://getcomposer.org/download/)
 *  Télécharger Laragon ou Wamp ou autre logiciel du même type selon l'OS
 *  Télécharger l'application et la mettre dans le dossier www
     
