@@ -11,6 +11,16 @@
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
+                        <div class="card mb-3 p-2">
+                            Pour se connecter en tant que :
+                            <ul>
+                                <li>Admin : admin@admin.com </li>
+                                <li>Author : admin@admin.com</li>
+                                <li>User : admin@admin.com</li>
+                            </ul>
+                            Mot de passe : password
+                        </div>
+
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
 
