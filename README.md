@@ -6,9 +6,6 @@ Objectifs :
 
 - Importer des projets dans la base de données
 - Professeurs et élèves peuvent consulter et télécharger ces projets 
-- Rechercher un projet selon son titre, sa description 
-- 
-
 
 
 Installation :
@@ -20,11 +17,13 @@ Installation :
 - Ensuite, il sera possible d'utiliser php artisan
 
 - Configurer le fichier .env, en indiquant les informations de sa base de données. Voici un exemple :
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=laravel
-DB_USERNAME=root
-DB_PASSWORD=
+- DB_CONNECTION=mysql
+- DB_HOST=127.0.0.1
+  DB_PORT=3306
+  DB_DATABASE=laravel
+  DB_USERNAME=root
+  DB_PASSWORD=
  
 - Effectuer les migrations vers la base de données avec la commande "php artisan migration"
+
+- Remplir la base de données avec la commande "php artisan db:seed" **(à effectuer 2 fois de suite!!)**
