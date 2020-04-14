@@ -110,10 +110,10 @@
                                         <div class="carousel-inner">
                                             
                                             @if (isset($projects->find($project->id)->images[0]))
-                                                    <div class="carousel-item active">
-                                                        <img class="d-block w-100" style="max-height:15em" src="{{URL::to('/uploads/projects/extracted/' . $project->name . '/' . $projects->find($project->id)->images[0]) }}" alt="First slide">
-                                                    </div>    
-                                                @endif
+                                                <div class="carousel-item active">
+                                                    <img class="d-block w-100" style="max-height:15em" src="{{URL::to('/uploads/projects/extracted/' . $project->name . '/' . $projects->find($project->id)->images[0]) }}" alt="First slide">
+                                                </div>    
+                                            @endif
 
                                         </div>
                                     </div>

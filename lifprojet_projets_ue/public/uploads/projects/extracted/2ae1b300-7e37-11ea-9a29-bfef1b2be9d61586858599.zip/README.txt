@@ -1,0 +1,7 @@
+Le jeu est inspiré d'un jeu nommé "Flappy Bird", où un oiseau vole et doit passer entre des tuyaux.
+L'oiseau avance tout seul et lors d'un appui sur la barre d'espace il "saute" et se laisse ensuite tomber par la gravité.
+Pour pousser un peu plus loin les notions vues en TP, j'ai décidé de rajouter un mini-jeu bonus (symbolisé par un cercle bleu) où des balles rebondissent entre elles et l'oiseau qui suit la souris doit les éviter.
+
+Pour ce qui est du fonctionnement du programme, l'oiseau est traité comme une particule. Lors d'un appui sur espace, sa vitesse en y est modifié à une certaine valeur. Il avance en x à une vitesse fixe (même s'il ne bouge pas à l'écran), et la fenêtre va le "suivre" (l'affichage est décalé pour que x0 soit légèrement derrière l'oiseau).
+Le mini-jeu bonus est simiaile au TP des particules, avec en plus des rebonds entre les balles. Les collisions sont testées en vérifiant que la distance entre les balles et l'oiseau sont inférieurs aux rayons additionnées. Lors de collisions entre balles, les vitesses des 2 balles sont réparties équitablement et les balles partent dans des directions opposées. Je me suis permis de mettre une valeur de friction légèrement supérieure à 1 pour rendre le jeu plus intéressant.
+Les updates du jeu se font en fonction du temps qui passe (grâce à elapsedTime(), et en gardant en mémoire le temps de la dernière update) pour être sur que le jeu aille toujours à la même vitesse, peu importe la vitesse de calcul de l'ordinateur.

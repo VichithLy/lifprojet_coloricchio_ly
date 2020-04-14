@@ -81,142 +81,170 @@ class ProjectsController extends Controller
      */
     public function store(Request $request)
     {   
-        // file validation
-        $validator = Validator::make($request->all(),
-            ['file'=> 'required|mimes:zip']); //Taille max des fichiers à définir avec max:[taille en octets]
 
+
+        //dd( $request->file('files'));
+        // file validation
+        $validator = Validator::make($request->all(), [
+            'files.*'=> 'required|mimes:zip', //Taille max des fichiers à définir avec max:[taille en octets]
+        ]); 
+
+        
+        
         // if validation fails
         if($validator->fails()) {
 
-            $request->session()->flash('error', 'Mauvais type de fichier');
+            $request->session()->flash('error', 'Mauvais type de fichier(s) : seul le format ZIP est accepté');
 
         } else {
 
-                // if validation success
-            if($file = $request->file('file')) { //Si le fichier existe
+            $files = array();
 
-                //Nom fichier avec extension
-                $name = time().'_'.$request->file->getClientOriginalName();
-                //Nom du fichier avec date d'upload
-                $fileName = time().'.'.$request->file->extension(); 
-
-                //Upload du zip dans un dossier
+            // if validation success
+            if($files = $request->file('files')) { //Si le fichier existe
                 
-                    //Dossier d'upload
-                $target_path = 'uploads/projects';
-                    //Enregistrement vers le dossier
-                if($file->move(public_path($target_path), $fileName)) {
-                    $request->session()->flash('success', 'File uploaded successfully');
-                }
-
-                
-                    //Extraction du zip dans un dossier /extracted
-                $zipfile = new ZipArchive;
-                //$zip_target_path = public_path('uploads/projects/extracted/' . $name);
-                $zip_target_path = $target_path . '/extracted/' . $fileName;
-                
-                    //On ne vérifie pas que le fichier à upload n'existe pas déjà !
-                if ($zipfile->open(public_path($target_path . '/' . $fileName)) === TRUE) {
+                foreach($files as $file) {
                     
-                    $zipfile->extractTo(public_path($zip_target_path));
-                    $zipfile->close();
+                    //Nom fichier avec extension
+                    $name = time().'_'.$file->getClientOriginalName();
+                    //Nom du fichier avec date d'upload
+                    $fileName = (string)Uuid::generate().time().'.'.$file->extension(); 
 
-                    $request->session()->flash('success', 'File extracted successfully');
+                    //$fileName = time() .'_'. $name; 
 
-                } else {
+                    //Upload du zip dans un dossier
                     
-                    $request->session()->flash('error', 'File not extracted');
-
-                }
-
-                // ----------------------- //
-
-                //Liste des fichiers dans le dossier extrait du zip
-                $all_project_files = File::allfiles(public_path($zip_target_path));
-
-                    //Récupère tous les fichiers qui possède une extension particulière
-                        //images
-                $img_files = preg_grep('/\.(png|PNG|jpg|JPG|jpeg|JPEG)/', $all_project_files);
-
-                $img_files_path = [];
-                foreach ($img_files as $img) {
-                    $img_name = $img->getBaseName(); //nom du fichier
-                    $img_files_path[] = $img->getRelativePath() . '/' . $img_name;
-                    //echo $img, '</br>';
-                }
-
-                        //fichier texte
-                $txt_files = preg_grep('/\.(txt|md)/', $all_project_files);
-                
-                $txt_files_path = [];
-                foreach ($txt_files as $txt) {
-                    $txt_name = $txt->getBaseName(); //nom du fichier
-                    $txt_files_path[] = $txt->getRelativePath() . '/' . $txt_name;
-                    //echo $txt, '</br>';
-                }
-
-                //dd($img_files_path);
-                
-                //Infos utiles pour base de donnée
-                
-                    //Titre (nom sans l'extension)
-                $title = pathinfo($request->file->getClientOriginalName(), PATHINFO_FILENAME);
-                    //Année
-                $year = $request->year;
-                    //UE
-                $ue = $request->ue;
-                    //Lien README
-                $readme_link = $txt_files_path[0] ?? '';
-                //dd($readme_link);
-                    //Lien zip
-                $zip_link = $zip_target_path;
-                //dd($zip_link);
-
-
-                    //Les images
-                //dd($img_files_path);
-
-                    //Envoyer le tabeau d'image à la vue index
-
-
-                // ----------------------- //
-
-                //Enregistrement dans la base de données 
-                    //Titre
-                    //Année
-                    //UE
-                    //Lien README
-                    //Path du dossier zip
-
-
-                $img_files_path_json = json_encode($img_files_path, JSON_FORCE_OBJECT); 
-
-                //echo $img_files_path_json;
-                //dd($img_files_path_json);   
-
-                $project_ue = Ue::where('id', $ue)->first();
-
-                if($project_created = Project::create([
-                    'uuid' => (string)Uuid::generate(),
-                    'name' => $fileName,
-                    'title' => $title,
-                    'year' => $year,
-                    'readme' => $readme_link,
-                    'zip' => $zip_link,
-                    'images' => $img_files_path
+                        //Dossier d'upload
+                    $target_path = 'uploads/projects';
                     
-                ])) {
+                        //Enregistrement vers le dossier
+                    if($file->move(public_path($target_path), $fileName)) {
+                        $request->session()->flash('success', 'File uploaded successfully');
+                    }
 
-                    $request->session()->flash('success', $title . ' has been created');
-                    $project_created->ues()->attach($project_ue);
+                    
+                        //Extraction du zip dans un dossier /extracted
+                    $zipfile = new ZipArchive;
+                    //$zip_target_path = public_path('uploads/projects/extracted/' . $name);
+                    $zip_target_path = $target_path . '/extracted/' . $fileName;
+                    
+                        //On ne vérifie pas que le fichier à upload n'existe pas déjà !
+                    if ($zipfile->open(public_path($target_path . '/' . $fileName)) === TRUE) {
+                        
+                        $zipfile->extractTo(public_path($zip_target_path));
+                        $zipfile->close();
 
-                } else {
+                        $request->session()->flash('success', 'File extracted successfully');
 
-                    $request->session()->flash('error', 'Project ' . $title . " can't be created");
+                    } else {
+                        
+                        $request->session()->flash('error', 'File not extracted');
+
+                    }
+
+                    // ----------------------- //
+
+                    //Liste des fichiers dans le dossier extrait du zip
+                    $all_project_files = File::allfiles(public_path($zip_target_path));
+
+                        //Récupère tous les fichiers qui possède une extension particulière
+                            //images
+                    $img_files = preg_grep('/\.(png|PNG|jpg|JPG|jpeg|JPEG)/', $all_project_files);
+
+                    $img_files_path = [];
+                    foreach ($img_files as $img) {
+                        $img_name = $img->getBaseName(); //nom du fichier
+                        $img_files_path[] = $img->getRelativePath() . '/' . $img_name;
+                        //echo $img, '</br>';
+                    }
+
+                            //fichier texte
+                    $txt_files = preg_grep('/\.(txt|md)/', $all_project_files);
+                    
+                    $txt_files_path = [];
+                    foreach ($txt_files as $txt) {
+                        $txt_name = $txt->getBaseName(); //nom du fichier
+                        $txt_files_path[] = $txt->getRelativePath() . '/' . $txt_name;
+                        //echo $txt, '</br>';
+                    }
+
+                    //dd($img_files_path);
+                    
+                    //Infos utiles pour base de donnée
+                    
+                        //Titre (nom sans l'extension)
+                    $title = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                        //Année
+                    $year = $request->year;
+                        //UE
+                    $ue = $request->ue;
+                        //Lien README
+                    $readme_link = $txt_files_path[0] ?? '';
+                    //dd($readme_link);
+                        //Lien zip
+                    $zip_link = $zip_target_path;
+                    //dd($zip_link);
+
+
+                        //Les images
+                    //dd($img_files_path);
+
+                        //Envoyer le tabeau d'image à la vue index
+
+
+                    // ----------------------- //
+
+                    //Enregistrement dans la base de données 
+                        //Titre
+                        //Année
+                        //UE
+                        //Lien README
+                        //Path du dossier zip
+
+
+                    $img_files_path_json = json_encode($img_files_path, JSON_FORCE_OBJECT); 
+
+                    //echo $img_files_path_json;
+                    //dd($img_files_path_json);   
+
+                    $project_ue = Ue::where('id', $ue)->first();
+
+                    if($project_created = Project::create([
+                        'uuid' => (string)Uuid::generate(),
+                        'name' => $fileName,
+                        'title' => $title,
+                        'year' => $year,
+                        'readme' => $readme_link,
+                        'zip' => $zip_link,
+                        'images' => $img_files_path
+                        
+                    ])) {
+
+                        if(count($files) > 1 ) {
+                            $request->session()->flash('success',' Your projects have been created');
+                        } else {
+                            $request->session()->flash('success', $title . ' has been created');
+                        }
+                        
+                        
+                        $project_created->ues()->attach($project_ue);
+
+                    } else {
+
+                        $request->session()->flash('error', 'Project ' . $title . " can't be created");
+
+                    }
+                
+                
 
                 }
-                
+
             }
+
+
+
+
+            
 
         }
         
@@ -294,7 +322,7 @@ class ProjectsController extends Controller
         $search = $request->search;
 
         if(isset($search)) {
-            echo $search;
+
             $projects = Project::where('title', 'LIKE', '%' . $search . '%')
                             ->orWhere('name','LIKE','%'. $search .'%')
                             ->orWhere('year','LIKE','%'. $search .'%')

@@ -141,8 +141,8 @@
                             Pré-requis des projets à upload : 
                             <ul>
                                 <li>Dossier au format <strong>.zip UNIQUEMENT</strong></li>
-                                <li>Un titre de dossier explicite (nom du projet et noms des étudiant)</li>
-                                <li>Des images au format <strong>.png</strong> ou <strong>.jpg</strong> ou <strong>.jpeg</strong></li>
+                                <li>Un titre de dossier explicite (nom du projet et noms des étudiants)</li>
+                                <li>Au moins une image au format <strong>.png</strong> ou <strong>.jpg</strong> ou <strong>.jpeg</strong></li>
                                 <li>Un fichier README au format <strong>.txt</strong> ou <strong>.md</strong></li>
                             </ul>
                         </div>
@@ -188,8 +188,8 @@
                                     <!-- ====== Champ upload ====== -->
                                 
                                 <div class="custom-file mt-3 mb-3">
-                                    <input type="file" name="file" class="custom-file-input" id="customFile" required>
-                                    <label class="custom-file-label" for="customFile">Choose file</label>
+                                    <input type="file" name="files[]" class="custom-file-input" id="customFile" multiple required>
+                                    <label class="custom-file-label" for="customFile" multiple>Choose file</label>
                                 </div>
 
                                 <div class="form-group">
