@@ -15,8 +15,8 @@
                             Pour se connecter en tant que :
                             <ul>
                                 <li>Admin : admin@admin.com </li>
-                                <li>Author : admin@admin.com</li>
-                                <li>User : admin@admin.com</li>
+                                <li>Author : author@author.com</li>
+                                <li>User : user@user.com</li>
                             </ul>
                             Mot de passe : password
                         </div>
@@ -66,7 +66,7 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
                                 </button>
-                                
+
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
