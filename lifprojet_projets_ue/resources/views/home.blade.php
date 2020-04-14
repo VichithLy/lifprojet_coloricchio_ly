@@ -21,59 +21,70 @@
                     <!-- =================== BARRE DE RECHERCHE ====================== -->
 
                     <nav class="navbar navbar-light mb-3">
-
                         
-                    <form class="form-inline mb-2" action="" method="GET">            
-                            <input class="form-control mr-sm-2" type="search" placeholder="Search a project" aria-label="Search">
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                    </form>    
-                        
-                    <form class="form-inline mb-2" action="{{ route('projects.showAll') }}" method="GET">
+                        <form class="form-inline mb-2" action="" method="GET">     
+                                @csrf    
 
+                            <input class="form-control mr-sm-2" name="search" type="search" placeholder="Search a project" aria-label="Search" value="{{ $search ?? ''}}">
+                                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </form>    
+                        
+                        <form class="form-inline mb-2" action="{{ route('projects.showAll') }}" method="GET">
                             @csrf
-
-                        <div class="input-group input-group-sm">
-
-                            <div class="input-group-prepend ">
-                                <span class="input-group-text rounded" id="inputGroup-sizing-sm">UE</span>
-                            </div>
-                            <div class="mr-sm-3">
-                                <select class="form-control form-control-sm" name="ue">
-                                    <option value="1" selected>Tous</option>
-                                    <option value="2">LIFO63</option>
-                                    <option value="3">LIFAP6</option>
-                                </select>
-                            </div>
-
-                            <div class="input-group-prepend ">
-                                <span class="input-group-text rounded" id="inputGroup-sizing-sm">Année</span>
-                            </div>
-                            <div class="mr-sm-3">
-                                <select class="form-control form-control-sm" name="year">
-                                    <option value="1">Toutes</option>
-                                    <option value="2">2018</option>
-                                    <option value="3">2019</option>
-                                    <option value="4">2020</option>
-                                </select>
-                            </div>
-
-                            <div class="input-group-prepend">
-                                <span class="input-group-text rounded" id="inputGroup-sizing-sm">Trier par</span>
-                            </div>
-                            <div>
-                                <select class="form-control form-control-sm" name="sort">
-                                    <option value="1">Date d'ajout</option>
-                                    <option value="2">Ordre alphabétique</option>
-                                    <option value="3">Note</option>
-                                </select>
-                            </div>
                             
+                            <div class="input-group input-group-sm">
 
-                        </div>
+                                <!--
+                                <div class="input-group-prepend ">
+                                    <span class="input-group-text rounded" id="inputGroup-sizing-sm">UE</span>
+                                </div>
+                                <div class="mr-sm-3">
+                                    <select class="form-control form-control-sm" name="ue">
+                                        <option value="1" selected>Tous</option>
+                                        <option value="2">LIFO63</option>
+                                        <option value="3">LIFAP6</option>
+                                    </select>
+                                </div>
+                                
 
-                        <button type="submit" class="btn btn-secondary btn-sm float-right ml-2">
-                            Submit
-                        </button>
+                                <div class="input-group-prepend ">
+                                    <span class="input-group-text rounded" id="inputGroup-sizing-sm">Année</span>
+                                </div>
+                                <div class="mr-sm-3">
+                                    <select class="form-control form-control-sm" name="year">
+                                        <option value="1">Toutes</option>
+                                        <option value="2">2018</option>
+                                        <option value="3">2019</option>
+                                        <option value="4">2020</option>
+                                    </select>
+                                </div>
+                                -->
+
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text rounded" id="inputGroup-sizing-sm">Trier par</span>
+                                </div>
+                                <div>
+                                    <select class="form-control form-control-sm" name="sort">
+
+                                        <option value="0">Date d'ajout (du + récent au - récent)</option>
+                                        <option value="1" @if (isset($sort) && $sort == 1) {{'selected'}} @endif>Date d'ajout (du - récent au + récent)</option>
+
+                                        <option value="2" @if (isset($sort) && $sort == 2) {{'selected'}} @endif>Ordre alphabétique (croissant) </option>
+                                        <option value="3" @if (isset($sort) && $sort == 3) {{'selected'}} @endif>Ordre alphabétique (décroissant) </option>
+
+                                        <option value="4" @if (isset($sort) && $sort == 4) {{'selected'}} @endif>Note (décroissant)</option> 
+                                        <option value="5" @if (isset($sort) && $sort == 5) {{'selected'}} @endif>Note (croissant)</option>
+                                        
+                                        
+                                    </select>
+                                </div>
+                                
+
+                            </div>
+
+                            <button type="submit" class="btn btn-secondary btn-sm float-right ml-2">
+                                Submit
+                            </button>
 
                         </form>
                     </nav>

@@ -83,7 +83,7 @@ class ProjectsController extends Controller
     {   
         // file validation
         $validator = Validator::make($request->all(),
-            ['file'=> 'required|mimes:zip']);
+            ['file'=> 'required|mimes:zip']); //Taille max des fichiers à définir avec max:[taille en octets]
 
         // if validation fails
         if($validator->fails()) {
@@ -282,12 +282,31 @@ class ProjectsController extends Controller
 
     public function showAll(Request $request, Project $project)
     {
-        $projects = Project::all();
-        
+
+        /*$user = User::where('name','LIKE','%'.$q.'%')->orWhere('email','LIKE','%'.$q.'%')->get();
+        if(count($user) > 0)
+            return view('welcome')->withDetails($user)->withQuery ( $q );
+        else return view ('welcome')->withMessage('No Details found. Try to search again !');*/
+
+
+        $projects = Project::orderByDesc('created_at')->get();
+
+        $search = $request->search;
+
+        if(isset($search)) {
+            echo $search;
+            $projects = Project::where('title', 'LIKE', '%' . $search . '%')
+                            ->orWhere('name','LIKE','%'. $search .'%')
+                            ->orWhere('year','LIKE','%'. $search .'%')
+                            ->orWhere('description','LIKE','%'. $search .'%')    
+                            ->get();
+        }
+
         if(isset($request)) {
 
             if($request->sort == 1) {
-                $projects = Project::orderByDesc('created_at')->get();
+
+                 $projects = Project::all();
 
             } else if ($request->sort == 2) {
 
@@ -295,15 +314,26 @@ class ProjectsController extends Controller
 
             } else if ($request->sort == 3) {
 
+                $projects = Project::orderByDesc('title')->get();
+
+            } else if ($request->sort == 4) {
+
                 $projects = Project::orderByDesc('mark')->get();
+
+            } else if ($request->sort == 5) {
+
+                $projects = Project::orderBy('mark')->get();
 
             } 
 
-            
         } 
         
 
-        return view('home')->with('projects', $projects);
+        return view('home')
+            ->with('projects', $projects)
+            ->with('sort', $request->sort)
+            ->with('search', $search);
+
     }
     
 
