@@ -8,6 +8,7 @@ LIFPROJET : Site web de gestion de projets d'Unités d'Enseignement (UE)
 
 **Prérequis**
 *  Installer Composer : [https://getcomposer.org/download/](https://getcomposer.org/download/)
+*  Installer les dépendances du projet : composer install (à la racine du projet)
 *  Installer Laravel : composer global require "laravel/installer"
     *  Informer la variable d’environnement path de l’emplacement du dossier …/composer/vendor/bin.
 *  Télécharger Laragon ou Wamp ou autre logiciel du même type selon l'OS
