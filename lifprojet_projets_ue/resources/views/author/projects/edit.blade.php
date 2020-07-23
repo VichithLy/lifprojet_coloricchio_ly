@@ -1,74 +1,3 @@
-<!-- Script permettant de rendre visible ou invisible les attributs -->
-
-<script type="text/javascript">
-
-function verifMark ()
-{   
-    var checkbox_mark = document.getElementById('checkbox_mark');
-
-    // On vérifie l'état du checkbox (coché ou non)
-    if (!checkbox_mark.checked)
-    {   
-        document.getElementById('mark').type = 'hidden';
-        
-    }
-    else {
-        document.getElementById('mark').type = 'text';
-    }
-
-}
-
-function verifDescription ()
-{
-    var checkbox_description = document.getElementById('checkbox_description');
-
-    // On vérifie l'état du checkbox (coché ou non)
-    if (!checkbox_description.checked)
-    {   
-        document.getElementById('description').style = 'display:none';
-        
-    }
-    else {
-        document.getElementById('description').style = 'display:block';
-    }
-}
-
-function verifGit() 
-{
-    var checkbox_git = document.getElementById('checkbox_git');
-
-    // On vérifie l'état du checkbox (coché ou non)
-    if (!checkbox_git.checked)
-{   
-    document.getElementById('git').type = 'hidden';
-    
-}
-else {
-    document.getElementById('git').type = 'text';
-}
-
-}
-
-function verifReadme() 
-{
-    var checkbox_readme = document.getElementById('checkbox_readme');
-
-    // On vérifie l'état du checkbox (coché ou non)
-    if (!checkbox_readme.checked)
-{   
-    document.getElementById('readme').style = 'display:none';
-    
-}
-    else 
-{
-        document.getElementById('readme').style = 'display:block';
-}
-
-
-}
-</script>
-
-
 @extends('layouts.app')
 
 @section('content')
@@ -140,7 +69,6 @@ function verifReadme()
                         <!-- ====== Champ description ====== -->
 
                         <div class="form-group row">
-                            <input type="checkbox" id="checkbox_description" checked onChange="verifDescription();">
                             <label for="description" class="col-md-3 col-form-label text-md-right"><strong>Comment</strong></label>
 
                             <div class="col-md-6">
@@ -153,7 +81,6 @@ function verifReadme()
 
                         <!-- ====== Champ Note ====== -->
                         <div class="form-group row">
-                            <input type="checkbox" id="checkbox_mark" checked onChange="verifMark();">
                             <label for="mark" class="col-md-3 col-form-label text-md-right"><strong>Mark</strong></label>
 
                             <div class="col-md-6">
@@ -168,7 +95,6 @@ function verifReadme()
                         <!-- ====== Champ Git ====== -->
 
                         <div class="form-group row">
-                            <input type="checkbox" id="checkbox_git" checked onChange="verifGit();">
                             <label for="git" class="col-md-3 col-form-label text-md-right"><strong>Git repository :</strong></label>
                             
                             <div class="col-md-6">
@@ -185,7 +111,6 @@ function verifReadme()
                         <!-- ====== Champ README ====== -->
 
                         <div class="form-group row">
-                            <input type="checkbox" id="checkbox_readme" checked onChange="verifReadme();">
                             <label for="readme" class="col-md-3 col-form-label text-md-right"><strong>README file path :</strong></label>
                             
                             <div id="readme" class="col-md-6">
@@ -212,8 +137,6 @@ function verifReadme()
                                 {{ '/uploads/projects/' . $project->name }}
                             </div>
                         </div>
-
-                        <h6>Lorsque les cases sont décochées, les attributs ne seront pas affichés dans la liste des projets</h6>
 
                         <button type="submit" class="btn btn-primary float-right">
                             Update
